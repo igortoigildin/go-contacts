@@ -12,6 +12,7 @@ import (
 func main() {
 	e := echo.New()
 
+	e.POST("/auth/register", auth.RegisterHandler)
 	e.POST("/auth/login", auth.LoginHandler)
 	e.POST("/auth/logout", auth.LogoutHandler)
 	e.GET("/auth/verify", auth.VerifyHandler)

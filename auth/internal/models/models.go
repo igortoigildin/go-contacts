@@ -5,6 +5,13 @@ type LoginRequest struct {
 	Password string `json:"password" validate:"required"`
 }
 
+type RegisterRequest struct {
+	Username string `json:"username" validate:"required"`
+	Password string `json:"password" validate:"required"`
+	Email    string `json:"email"`
+}
+
 type AuthResponse struct {
-	AccessToken string `json:"access_token"`
+	Token  string `json:"token"`
+	UserID string `json:"user_id"`
 }

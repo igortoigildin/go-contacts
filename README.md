@@ -3,10 +3,17 @@
 Архетиктура приложения состоит из следующих микросервисов:
 User Service, Subscriber service, Chat service, Auth service.
 
+Для общения между сервисами будет использован протокол gRPC.
+Для общения с клиентами будет использован REST API через Facade Gateway.
+Для найстройки асинхронного общения между сервисами (между сервисом Auth и User)
+будет использован брокер сообщений Kafka в связи с его надежностью и масштабируемостью.
+
 ## User Service
 
 User Service - отвечает за регистрацию пользователя, редактирование профиля,
 поиск пользователя по никнейму, получение данных пользователя.
+Сервис подписывается на событие UserRegistered через брокер сообщений Kafka
+от сервиса Auth и создавать нового пользователя.
 
 API User Service содержит следующие методы:
 
@@ -55,13 +62,19 @@ API Chat service содержит следующие методы:
 ## Auth service
 
 Auth service - отвечает за авторизацию пользователя.
+Будет взаимодействовать с сервисом User по gRPC.
+Будет публиковать события о регистрации нового пользователя UserRegistered, использую
+при этом брокер сообщений Kafka. Это объясняется тем, что можно регистрировать и отвечать
+клиенту быстро, а профиль создавать в фоне.
 
-Логин, выдача токена - (Login) - POST /auth/login
+Регистрация пользователя - (Register) POST /auth/register
 
-Проверка валидности токена - (Refresh token) - GET /auth/verify
+Логин, выдача токена - (Login) POST /auth/login
 
-Выход, аннулирование токена - (Logout) - POST /auth/logout
+Проверка валидности токена - (Refresh token) GET /auth/verify
+
+Выход, аннулирование токена - (Logout) POST /auth/logout
 
 #
 
-[![Screenshot-2025-04-15-at-1-09-54-PM.png](https://i.postimg.cc/5tL8tNdv/Screenshot-2025-04-15-at-1-09-54-PM.png)](https://postimg.cc/NyGKJt0f)
+[![1.png](https://i.postimg.cc/qRTCF7X1/1.png)](https://postimg.cc/1gvtnsdF)

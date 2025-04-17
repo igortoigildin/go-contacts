@@ -1,0 +1,46 @@
+version: "3.8"
+
+services:
+  auth:
+    build:
+      context: ./auth
+      dockerfile: Dockerfile
+    container_name: auth-service
+    ports:
+      - "8000:8080"
+    networks:
+      - backend
+
+  user:
+    build:
+      context: ./user
+      dockerfile: Dockerfile
+    container_name: user-service
+    ports:
+      - "8001:8080"
+    networks:
+      - backend
+
+  subscriber:
+    build:
+      context: ./subscriber
+      dockerfile: Dockerfile
+    container_name: subscriber-service
+    ports:
+      - "8002:8080"
+    networks:
+      - backend
+
+  chat:
+    build:
+      context: ./chat
+      dockerfile: Dockerfile
+    container_name: chat-service
+    ports:
+      - "8003:8080"
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge
