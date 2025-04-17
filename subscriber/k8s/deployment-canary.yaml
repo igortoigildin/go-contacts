@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: subscriber-canary
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: subscriber
+      version: canary
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        app: subscriber
+        version: canary
+    spec:
+      containers:
+        - name: subscriber
+          image: docker.io/library/subscriber:v2
+          imagePullPolicy: "Never" # for local in minikube
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /health/ready
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /health/ready
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 10
