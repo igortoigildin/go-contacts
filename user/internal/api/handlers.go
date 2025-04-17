@@ -42,7 +42,6 @@ func SearchUserHandler(c echo.Context) error {
 	return c.JSON(http.StatusOK, result)
 }
 
-
 func CreateUser(user models.User) (any, error) {
 	// TODO: to be updated
 	return user, nil
@@ -60,7 +59,7 @@ func GetUser(id string) (any, error) {
 	return user, nil
 }
 
-func SearchUsers(id string) (any) {
+func SearchUsers(id string) any {
 	// TODO: to be updated
 	var user models.User
 	return user

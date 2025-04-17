@@ -35,7 +35,6 @@ func GetMessagesHandler(c echo.Context) error {
 	return c.JSON(http.StatusOK, msgs)
 }
 
-
 // TODO: business logic to be updated
 func CreateChat(id string) (any, error) {
 	return nil, nil

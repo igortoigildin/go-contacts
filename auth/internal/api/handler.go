@@ -78,5 +78,3 @@ func Login(email, password string) (string, error) {
 	// TODO: business logic to be added
 	return "1", nil
 }
-
-
