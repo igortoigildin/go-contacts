@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package chat;
+
+option go_package = "github.com/igortoigildin/go-contacts/chat/api/proto;chatpb";
+
+
+// Message types
+message CreateChatRequest {
+  string user_id = 1;
+  string participant_id = 2;
+}
+
+message CreateChatResponse {
+  string chat_id = 1;
+}
+
+message GetUserChatsRequest {
+  string user_id = 1;
+}
+
+message Chat {
+  string id = 1;
+  string user_id = 2;
+  string participant_id = 3;
+  string created_at = 4;
+}
+
+message GetUserChatsResponse {
+  repeated Chat chats = 1;
+}
+
+message SendMessageRequest {
+  string chat_id = 1;
+  string sender_id = 2;
+  string content = 3;
+}
+
+message SendMessageResponse {
+  string message_id = 1;
+}
+
+message GetMessagesRequest {
+  string chat_id = 1;
+  int32 limit = 2;
+  int32 offset = 3;
+}
+
+message Message {
+  string id = 1;
+  string chat_id = 2;
+  string sender_id = 3;
+  string content = 4;
+  string created_at = 5;
+}
+
+message GetMessagesResponse {
+  repeated Message messages = 1;
+} 
