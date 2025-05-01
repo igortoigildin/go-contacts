@@ -1,0 +1,70 @@
+syntax = "proto3";
+
+package chat;
+
+option go_package = "github.com/igortoigildin/go-contacts/chat/api/proto;chatpb";
+
+import "api/chats/messages.proto";
+import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+  info: {
+    title: "Chat Service API";
+    version: "1.0";
+    description: "API for chat service";
+  };
+  schemes: HTTP;
+  schemes: HTTPS;
+  consumes: "application/json";
+  produces: "application/json";
+};
+
+// Chat service definition
+service ChatService {
+  // Create a new chat
+  rpc CreateChat(CreateChatRequest) returns (CreateChatResponse) {
+    option (google.api.http) = {
+      post: "/v1/chats"
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Create a new chat"
+      description: "Creates a new chat room for the specified user"
+    };
+  }
+
+  // Get all chats for a specific user
+  rpc GetUserChats(GetUserChatsRequest) returns (GetUserChatsResponse) {
+    option (google.api.http) = {
+      get: "/v1/chats/{user_id}"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Get user chats"
+      description: "Retrieves all chats for a specific user"
+    };
+  }
+
+  // Send a message in a chat
+  rpc SendMessage(SendMessageRequest) returns (SendMessageResponse) {
+    option (google.api.http) = {
+      post: "/v1/chats/{chat_id}/messages"
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Send message"
+      description: "Sends a message to a specific chat"
+    };
+  }
+
+  // Get messages from a chat
+  rpc GetMessages(GetMessagesRequest) returns (GetMessagesResponse) {
+    option (google.api.http) = {
+      get: "/v1/chats/{chat_id}/messages"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Get chat messages"
+      description: "Retrieves messages from a specific chat"
+    };
+  }
+} 

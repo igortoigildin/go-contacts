@@ -1,3 +1,5 @@
+include vendor.proto.mk
+
 .PHONY: proto-gen clean
 
 # Используем bin в текущей директории для установки плагинов protoc
@@ -7,61 +9,53 @@ LOCAL_BIN := $(CURDIR)/bin
 PROTOC = PATH="$$PATH:$(LOCAL_BIN)" protoc
 
 # Путь до protobuf файлов
-PROTO_PATH := $(CURDIR)/api/proto
+PROTO_PATH := $(CURDIR)/api
 
 # Путь до сгенеренных .pb.go файлов
 PKG_PROTO_PATH := $(CURDIR)/pkg
 
+# Путь до завендореных protobuf файлов
+VENDOR_PROTO_PATH := $(CURDIR)/vendor.protobuf
+
 # устанавливаем необходимые плагины
-bin-deps: export GOBIN := $(LOCAL_BIN)
-bin-deps:
+.bin-deps: export GOBIN := $(LOCAL_BIN)
+.bin-deps:
 	$(info Installing binary dependencies...)
 	
-	# Create bin directory if it doesn't exist
-	mkdir -p $(LOCAL_BIN)
-	
-	# Install protoc for macOS
-	brew install protobuf
-	
-	# Install protoc plugins with explicit paths
-	go install -v google.golang.org/protobuf/cmd/protoc-gen-go@latest
-	go install -v google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
-	go install -v github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@latest
-	
-	# Make plugins executable
-	chmod +x $(LOCAL_BIN)/protoc-gen-go
-	chmod +x $(LOCAL_BIN)/protoc-gen-go-grpc
-	chmod +x $(LOCAL_BIN)/protoc-gen-openapiv2
-	
-	# Verify installation
-	@echo "Verifying installation..."
-	@which protoc || (echo "protoc not found" && exit 1)
-	@ls -l $(LOCAL_BIN)/protoc-gen-go || (echo "protoc-gen-go not found" && exit 1)
-	@ls -l $(LOCAL_BIN)/protoc-gen-go-grpc || (echo "protoc-gen-go-grpc not found" && exit 1)
-	@ls -l $(LOCAL_BIN)/protoc-gen-openapiv2 || (echo "protoc-gen-openapiv2 not found" && exit 1)
+	go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+	go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+	go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@latest
+	go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@latest
 
 # генерация .go файлов с помощью protoc
-protoc-generate:
+.protoc-generate:
 	mkdir -p $(PKG_PROTO_PATH)
-	$(PROTOC) --plugin=protoc-gen-go=$(LOCAL_BIN)/protoc-gen-go \
-		--plugin=protoc-gen-go-grpc=$(LOCAL_BIN)/protoc-gen-go-grpc \
-		--plugin=protoc-gen-openapiv2=$(LOCAL_BIN)/protoc-gen-openapiv2 \
-		--proto_path=$(CURDIR) \
-		--proto_path=$(GOPATH)/src/github.com/googleapis/googleapis \
-		--go_out=$(PKG_PROTO_PATH) --go_opt paths=source_relative \
-		--go-grpc_out=$(PKG_PROTO_PATH) --go-grpc_opt paths=source_relative \
-		--openapiv2_out=$(PKG_PROTO_PATH) --openapiv2_opt logtostderr=true \
-		$(PROTO_PATH)/messages.proto \
-		$(PROTO_PATH)/service.proto
+	$(PROTOC) -I $(VENDOR_PROTO_PATH) --proto_path=$(CURDIR) \
+	--go_out=$(PKG_PROTO_PATH) --go_opt paths=source_relative \
+	--go-grpc_out=$(PKG_PROTO_PATH) --go-grpc_opt paths=source_relative \
+	--grpc-gateway_out=$(PKG_PROTO_PATH) --grpc-gateway_opt paths=source_relative --grpc-gateway_opt generate_unbound_methods=true \
+	--openapiv2_out=$(PKG_PROTO_PATH) --openapiv2_opt logtostderr=true --openapiv2_opt generate_unbound_methods=true \
+	$(PROTO_PATH)/chats/messages.proto $(PROTO_PATH)/chats/service.proto
 
 # go mod tidy
-tidy:
+.tidy:
 	GOBIN=$(LOCAL_BIN) go mod tidy
 
 # Генерация кода из protobuf
-generate: bin-deps protoc-generate tidy
+generate: .bin-deps .protoc-generate .tidy
 
 # Билд приложения
 build:
-	go build -o $(LOCAL_BIN) ./cmd/main.go
-	go build -o $(LOCAL_BIN) ./cmd/client.go
+	go build -o $(LOCAL_BIN) ./cmd/chat/server/main.go
+	go build -o $(LOCAL_BIN) ./cmd/chat/client/main.go
+
+# Объявляем, что текущие команды не являются файлами и
+# интсрументируем Makefile не искать изменения в файловой системе
+.PHONY: \
+	.bin-deps \
+	.protoc-generate \
+	.tidy \
+	.vendor-protovalidate \
+	vendor \
+	generate \
+	build

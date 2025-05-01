@@ -9,6 +9,7 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+// TODO: to be updated. Please refer to USER service
 func main() {
 	e := echo.New()
 

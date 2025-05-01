@@ -1,0 +1,70 @@
+syntax = "proto3";
+
+package chat;
+
+option go_package = "github.com/igortoigildin/go-contacts/chat/api/proto;chatpb";
+
+import "google/api/field_behavior.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+// Message represents a single chat message
+message Message {
+  string id = 1;
+  string chat_id = 2;
+  string user_id = 3;
+  string content = 4;
+  int64 timestamp = 5;
+}
+
+// CreateChatRequest represents a request to create a new chat
+message CreateChatRequest {
+  string user_id = 1;
+  string title = 2;
+}
+
+// CreateChatResponse represents a response to creating a new chat
+message CreateChatResponse {
+  string chat_id = 1;
+}
+
+// GetUserChatsRequest represents a request to get all chats for a user
+message GetUserChatsRequest {
+  string user_id = 1;
+}
+
+// GetUserChatsResponse represents a response containing all chats for a user
+message GetUserChatsResponse {
+  repeated Chat chats = 1;
+}
+
+// Chat represents a chat room
+message Chat {
+  string id = 1;
+  string title = 2;
+  string user_id = 3;
+  int64 created_at = 4;
+}
+
+// SendMessageRequest represents a request to send a message
+message SendMessageRequest {
+  string chat_id = 1;
+  string user_id = 2;
+  string content = 3;
+}
+
+// SendMessageResponse represents a response to sending a message
+message SendMessageResponse {
+  string message_id = 1;
+}
+
+// GetMessagesRequest represents a request to get messages from a chat
+message GetMessagesRequest {
+  string chat_id = 1;
+  int32 limit = 2;
+  string before = 3;
+}
+
+// GetMessagesResponse represents a response containing messages from a chat
+message GetMessagesResponse {
+  repeated Message messages = 1;
+} 

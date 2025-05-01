@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+package github.com.igortoigildin.go.contacts.user;
+
+import "api/users/messages.proto";
+import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+option go_package = "user/pkg/api/users;users";
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+  info: {
+    title: "User Service API";
+    version: "1.0";
+    description: "API for user service";
+  };
+  schemes: HTTP;
+  schemes: HTTPS;
+};
+
+service UserService {
+  // CreateUser creates a new user
+  rpc CreateUser(CreateUserRequest) returns (User) {
+    option (google.api.http) = {
+      post: "/users"
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Create new user"
+      description: "Create a new user with the provided details"
+      tags: ["users"]
+    };
+  }
+
+  // GetUser retrieves a user by ID
+  rpc GetUser(GetUserRequest) returns (User) {
+    option (google.api.http) = {
+      get: "/users/{id}"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Get user by ID"
+      description: "Retrieve user details by their unique identifier"
+      tags: ["users"]
+    };
+  }
+
+  // UpdateUser updates an existing user
+  rpc UpdateUser(UpdateUserRequest) returns (User) {
+    option (google.api.http) = {
+      put: "/users/{id}"
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Update user"
+      description: "Update an existing user's information"
+      tags: ["users"]
+    };
+  }
+
+  // SearchUsers searches for users based on criteria
+  rpc SearchUsers(SearchUsersRequest) returns (SearchUsersResponse) {
+    option (google.api.http) = {
+      get: "/users/search"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Search users"
+      description: "Search for users based on various criteria with pagination support"
+      tags: ["users"]
+    };
+  }
+}
+

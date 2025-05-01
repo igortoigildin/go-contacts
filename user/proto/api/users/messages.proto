@@ -1,0 +1,257 @@
+syntax = "proto3";
+
+package github.com.igortoigildin.go.contacts.user;
+
+import "buf/validate/validate.proto";
+import "google/api/field_behavior.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "user/pkg/api/users;users";
+
+// User - user data
+message User {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    json_schema: {
+      title: "User"
+      description: "User represents a contact in the system"
+      required: ["id", "name", "email"]
+    }
+  };
+
+  string id = 1 [
+    json_name = "id",
+    (google.api.field_behavior) = REQUIRED,
+    (buf.validate.field).string = {
+      min_len: 1,
+      max_len: 36,
+      pattern: "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+    },
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "Unique identifier of the user"
+      //example: "123e4567-e89b-12d3-a456-426614174000"
+    }
+  ];
+
+  string name = 2 [
+    json_name = "name",
+    (google.api.field_behavior) = REQUIRED,
+    (buf.validate.field).string = {
+      min_len: 1,
+      max_len: 100,
+      pattern: "^[\\p{L}\\s'-]+$"
+    },
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "Full name of the user"
+      //example: "\"John Doe\""
+    }
+  ];
+
+  string email = 3 [
+    json_name = "email",
+    (google.api.field_behavior) = REQUIRED,
+    (buf.validate.field).string = {
+      pattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
+    },
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "Email address of the user"
+      //example: "\"john.doe@example.com\""
+    }
+  ];
+
+   google.protobuf.Timestamp created_at = 5 [
+    json_name = "createdAt",
+    (google.api.field_behavior) = OUTPUT_ONLY,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "Timestamp when the user was created"
+    }
+  ];
+  
+  google.protobuf.Timestamp updated_at = 6 [
+    json_name = "updatedAt",
+    (google.api.field_behavior) = OUTPUT_ONLY,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "Timestamp when the user was last updated"
+    }
+  ];
+}
+
+message CreateUserRequest {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    json_schema: {
+      title: "Create User Request"
+      description: "Request payload for creating a new user"
+      required: ["name", "email"]
+    }
+  };
+  string name = 1 [
+    json_name = "name",
+    (google.api.field_behavior) = REQUIRED,
+    (buf.validate.field).string = {
+      min_len: 1,
+      max_len: 100,
+      pattern: "^[\\p{L}\\s'-]+$"
+    },
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "Full name of the user"
+      //example: "\"John Doe\""
+    }
+  ];
+  
+  string email = 2 [
+    json_name = "email",
+    (google.api.field_behavior) = REQUIRED,
+    (buf.validate.field).string = {
+      pattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
+    },
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "Email address of the user"
+    }
+  ];
+}
+
+message GetUserRequest {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    json_schema: {
+      title: "Get User Request"
+      description: "Request payload for retrieving a user by ID"
+      required: ["id"]
+    }
+  };
+  string id = 1 [
+    json_name = "id",
+    (google.api.field_behavior) = REQUIRED,
+    (buf.validate.field).string = {
+      min_len: 36,
+      max_len: 36,
+      pattern: "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+    },
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "Unique identifier of the user to retrieve"
+      //example: "123e4567-e89b-12d3-a456-426614174000"
+    }
+  ];
+}
+
+message UpdateUserRequest {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    json_schema: {
+      title: "Update User Request"
+      description: "Request payload for updating an existing user"
+      required: ["id"]
+    }
+  };
+  string id = 1 [
+    json_name = "id",
+    (google.api.field_behavior) = REQUIRED,
+    (buf.validate.field).string = {
+      min_len: 36,
+      max_len: 36,
+      pattern: "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+    },
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "Unique identifier of the user to update"
+      //example: "123e4567-e89b-12d3-a456-426614174000"
+    }
+  ];
+  
+  string name = 2 [
+    json_name = "name",
+    (google.api.field_behavior) = OPTIONAL,
+    (buf.validate.field).string = {
+      min_len: 1,
+      max_len: 100,
+      pattern: "^[\\p{L}\\s'-]+$"
+    },
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "New full name of the user"
+      //example: "\"John Doe\""
+    }
+  ];
+  
+  string email = 3 [
+    json_name = "email",
+    (google.api.field_behavior) = OPTIONAL,
+    (buf.validate.field).string = {
+      pattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
+    },
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "New email address of the user"
+      //example: "\"john.doe@example.com\""
+    }
+  ];
+}
+
+message SearchUsersRequest {
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    json_schema: {
+      title: "Search Users Request"
+      description: "Request payload for searching users"
+    }
+  };
+
+  string query = 1 [
+    json_name = "query",
+    (google.api.field_behavior) = OPTIONAL,
+    (buf.validate.field).string = {
+      max_len: 100
+    },
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "Search query string to filter users"
+      //example: "\"John Doe\""
+    }
+  ];
+  
+  int32 page = 2 [
+    json_name = "page",
+    (google.api.field_behavior) = OPTIONAL,
+    (buf.validate.field).int32 = {
+      gt: 0
+    },
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "Page number for pagination (starts from 1)"
+      default: "1"
+      minimum: 1
+    }
+  ];
+  
+  int32 page_size = 3 [
+    json_name = "pageSize",
+    (google.api.field_behavior) = OPTIONAL,
+    (buf.validate.field).int32 = {
+      gt: 0,
+      lte: 100
+    },
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "Number of items per page"
+      default: "10"
+      minimum: 1
+      maximum: 100
+    }
+  ];
+}
+
+message SearchUsersResponse {
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    json_schema: {
+      title: "Search Users Response"
+      description: "Response payload for user search results"
+    }
+  };
+
+  repeated User users = 1 [
+    json_name = "users",
+    (google.api.field_behavior) = OUTPUT_ONLY,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "List of users matching the search criteria"
+    }
+  ];
+  
+  int32 total = 2 [
+    json_name = "total",
+    (google.api.field_behavior) = OUTPUT_ONLY,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "Total number of users matching the search criteria"
+    }
+  ];
+}

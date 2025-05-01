@@ -37,6 +37,7 @@ COPY --from=builder /app/user-service /user-service
 WORKDIR /
 
 EXPOSE 8080
+EXPOSE 8082
 
 # Указываем команду запуска
 CMD ["/user-service"]
