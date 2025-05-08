@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package chat;
+package github.com.igortoigildin.go_contacts.chat.api.chats;
 
 option go_package = "github.com/igortoigildin/go-contacts/chat/api/proto;chatpb";
 

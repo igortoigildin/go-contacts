@@ -28,3 +28,9 @@ chat/vendor.protobuf/
 subscriber/vendor.protobuf/
 user/vendor.protobuf/
 auth/vendor.protobuf/
+
+
+chat/bin/
+subscriber/bin/
+user/bin/
+auth/bin/
