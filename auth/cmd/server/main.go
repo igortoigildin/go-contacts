@@ -5,10 +5,11 @@ import (
 	"os"
 	"time"
 
-	auth "github.com/igortoigildin/go-contacts/auth/internal/api"
+	auth "github.com/igortoigildin/go-contacts/auth/internal/server/handlers"
 	"github.com/labstack/echo/v4"
 )
 
+// TODO: to be updated. Please refer to USER service
 func main() {
 	e := echo.New()
 
