@@ -22,3 +22,9 @@ _testmain.go
 *.exe
 *.test
 *.prof
+
+# Vendor protobuf
+chat/vendor.protobuf/
+subscriber/vendor.protobuf/
+user/vendor.protobuf/
+auth/vendor.protobuf/
