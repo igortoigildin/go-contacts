@@ -6,7 +6,7 @@ import "buf/validate/validate.proto";
 import "google/api/field_behavior.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
 
-option go_package = "auth/pkg/api/auth;auth";
+option go_package = "github.com/igortoigildin/go-contacts/auth/pkg/proto;proto";
 
 // Register request message
 message RegisterRequest {
@@ -14,7 +14,10 @@ message RegisterRequest {
     json_schema: {
       title: "RegisterRequest"
       description: "Register request message"
-      required: ["username", "password"]
+      required: [
+        "username",
+        "password"
+      ]
     }
   };
   string username = 1 [
@@ -33,13 +36,33 @@ message RegisterRequest {
   ];
 }
 
+message RegisterResponse {
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    json_schema: {
+      title: "RegisterResponse"
+      description: "Register response message"
+    }
+  };
+  string username = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (buf.validate.field).string = {
+      min_len: 1,
+      max_len: 100
+    }
+  ];
+}
+
+
 // Login request message
 message LoginRequest {
   option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
     json_schema: {
       title: "LoginRequest"
       description: "Login request message"
-      required: ["username", "password"]
+      required: [
+        "username",
+        "password"
+      ]
     }
   };
   string username = 1 [
@@ -85,7 +108,14 @@ message VerifyRequest {
       required: ["token"]
     }
   };
-  string token = 1 [
+  string username = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (buf.validate.field).string = {
+      min_len: 1,
+      max_len: 100
+    }
+  ];
+  string token = 2 [
     (google.api.field_behavior) = REQUIRED,
     (buf.validate.field).string = {
       min_len: 1,
@@ -94,25 +124,16 @@ message VerifyRequest {
   ];
 }
 
-// Verify response message
-message VerifyResponse {
-  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
-    json_schema: {
-      title: "VerifyResponse"
-      description: "Verify response message"
-      required: ["valid"]
-    }
-  };
-  bool valid = 1;
-}
-
 // Logout request message
 message LogoutRequest {
   option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
     json_schema: {
       title: "LogoutRequest"
       description: "Logout request message"
-      required: ["username", "token"]
+      required: [
+        "username",
+        "token"
+      ]
     }
   };
   string username = 1 [
@@ -148,6 +169,7 @@ message SuccessResponse {
     }
   ];
 }
+
 // Error response message
 message ErrorResponse {
   option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
@@ -158,4 +180,4 @@ message ErrorResponse {
     }
   };
   string error = 1;
-} 
+}

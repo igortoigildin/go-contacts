@@ -98,7 +98,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/authSuccessResponse"
+              "$ref": "#/definitions/authRegisterResponse"
             }
           },
           "default": {
@@ -132,7 +132,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/authVerifyResponse"
+              "$ref": "#/definitions/authSuccessResponse"
             }
           },
           "default": {
@@ -224,6 +224,19 @@
         "password"
       ]
     },
+    "authRegisterResponse": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        }
+      },
+      "description": "Register response message",
+      "title": "RegisterResponse",
+      "required": [
+        "username"
+      ]
+    },
     "authSuccessResponse": {
       "type": "object",
       "properties": {
@@ -240,6 +253,9 @@
     "authVerifyRequest": {
       "type": "object",
       "properties": {
+        "username": {
+          "type": "string"
+        },
         "token": {
           "type": "string"
         }
@@ -247,20 +263,8 @@
       "description": "Verify request message",
       "title": "VerifyRequest",
       "required": [
+        "username",
         "token"
-      ]
-    },
-    "authVerifyResponse": {
-      "type": "object",
-      "properties": {
-        "valid": {
-          "type": "boolean"
-        }
-      },
-      "description": "Verify response message",
-      "title": "VerifyResponse",
-      "required": [
-        "valid"
       ]
     },
     "protobufAny": {

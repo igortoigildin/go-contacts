@@ -1,151 +1,167 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "1.0.0",
-    "title": "Auth Service API",
-    "description": "API для регистрации, авторизации, выхода и верификации пользователя"
+    "title": "Auth Service",
+    "version": "1.0",
+    "contact": {
+      "name": "Toigildin"
+    }
   },
-  "host": "localhost:8080",
-  "basePath": "/",
-  "schemes": ["http"],
+  "tags": [
+    {
+      "name": "AuthService"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
   "paths": {
-    "/auth/register": {
-      "post": {
-        "summary": "Регистрация нового пользователя",
-        "tags": ["auth"],
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "description": "Данные пользователя для регистрации",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/RegisterRequest"
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Пользователь зарегистрирован",
-            "schema": {
-              "$ref": "#/definitions/SuccessResponse"
-            }
-          },
-          "400": {
-            "description": "Ошибка валидации",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "500": {
-            "description": "Ошибка сервера",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
     "/auth/login": {
       "post": {
-        "summary": "Авторизация пользователя",
-        "tags": ["auth"],
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
+        "summary": "Login user",
+        "operationId": "AuthService_Login",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/authLoginResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
         "parameters": [
           {
-            "in": "body",
             "name": "body",
-            "description": "Данные для входа",
+            "description": "Login request message",
+            "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/LoginRequest"
+              "$ref": "#/definitions/authLoginRequest"
             }
           }
         ],
-        "responses": {
-          "200": {
-            "description": "Успешная авторизация",
-            "schema": {
-              "$ref": "#/definitions/LoginResponse"
-            }
-          },
-          "401": {
-            "description": "Неверные учетные данные",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "500": {
-            "description": "Ошибка сервера",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
+        "tags": [
+          "AuthService"
+        ]
       }
     },
     "/auth/logout": {
       "post": {
-        "summary": "Выход пользователя",
-        "tags": ["auth"],
-        "produces": ["application/json"],
+        "summary": "Logout user",
+        "operationId": "AuthService_Logout",
         "responses": {
           "200": {
-            "description": "Выход успешен",
+            "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/SuccessResponse"
+              "$ref": "#/definitions/authSuccessResponse"
             }
           },
-          "401": {
-            "description": "Пользователь не авторизован",
+          "default": {
+            "description": "An unexpected error response.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "500": {
-            "description": "Ошибка сервера",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/rpcStatus"
             }
           }
-        }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "Logout request message",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/authLogoutRequest"
+            }
+          }
+        ],
+        "tags": [
+          "AuthService"
+        ]
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "summary": "Register a new user",
+        "operationId": "AuthService_Register",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/authSuccessResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "Register request message",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/authRegisterRequest"
+            }
+          }
+        ],
+        "tags": [
+          "AuthService"
+        ]
       }
     },
     "/auth/verify": {
-      "get": {
-        "summary": "Проверка токена",
-        "tags": ["auth"],
-        "produces": ["application/json"],
+      "post": {
+        "summary": "Verify token",
+        "operationId": "AuthService_Verify",
         "responses": {
           "200": {
-            "description": "Токен валиден",
+            "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/VerifyResponse"
+              "$ref": "#/definitions/authVerifyResponse"
             }
           },
-          "401": {
-            "description": "Токен недействителен",
+          "default": {
+            "description": "An unexpected error response.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "500": {
-            "description": "Ошибка сервера",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/rpcStatus"
             }
           }
-        }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "Verify request message",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/authVerifyRequest"
+            }
+          }
+        ],
+        "tags": [
+          "AuthService"
+        ]
       }
     }
   },
   "definitions": {
-    "RegisterRequest": {
+    "authLoginRequest": {
       "type": "object",
-      "required": ["username", "password"],
       "properties": {
         "username": {
           "type": "string"
@@ -153,55 +169,125 @@
         "password": {
           "type": "string"
         }
-      }
+      },
+      "description": "Login request message",
+      "title": "LoginRequest",
+      "required": [
+        "username",
+        "password"
+      ]
     },
-    "LoginRequest": {
-      "type": "object",
-      "required": ["username", "password"],
-      "properties": {
-        "username": {
-          "type": "string"
-        },
-        "password": {
-          "type": "string"
-        }
-      }
-    },
-    "LoginResponse": {
+    "authLoginResponse": {
       "type": "object",
       "properties": {
         "token": {
-          "type": "string",
-          "description": "JWT токен"
+          "type": "string"
         }
-      }
+      },
+      "description": "Login response message",
+      "title": "LoginResponse",
+      "required": [
+        "token"
+      ]
     },
-    "VerifyResponse": {
+    "authLogoutRequest": {
       "type": "object",
       "properties": {
-        "valid": {
-          "type": "boolean",
-          "description": "Результат проверки токена"
-        },
         "username": {
-          "type": "string",
-          "description": "Имя пользователя"
+          "type": "string"
+        },
+        "token": {
+          "type": "string"
         }
-      }
+      },
+      "description": "Logout request message",
+      "title": "LogoutRequest",
+      "required": [
+        "username",
+        "token"
+      ]
     },
-    "SuccessResponse": {
+    "authRegisterRequest": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "description": "Register request message",
+      "title": "RegisterRequest",
+      "required": [
+        "username",
+        "password"
+      ]
+    },
+    "authSuccessResponse": {
       "type": "object",
       "properties": {
         "message": {
           "type": "string"
         }
-      }
+      },
+      "description": "Success response message",
+      "title": "SuccessResponse",
+      "required": [
+        "message"
+      ]
     },
-    "ErrorResponse": {
+    "authVerifyRequest": {
       "type": "object",
       "properties": {
-        "error": {
+        "token": {
           "type": "string"
+        }
+      },
+      "description": "Verify request message",
+      "title": "VerifyRequest",
+      "required": [
+        "token"
+      ]
+    },
+    "authVerifyResponse": {
+      "type": "object",
+      "properties": {
+        "valid": {
+          "type": "boolean"
+        }
+      },
+      "description": "Verify response message",
+      "title": "VerifyResponse",
+      "required": [
+        "valid"
+      ]
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
         }
       }
     }

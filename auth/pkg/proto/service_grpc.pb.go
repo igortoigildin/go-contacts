@@ -4,7 +4,7 @@
 // - protoc             v5.29.3
 // source: proto/service.proto
 
-package auth
+package proto
 
 import (
 	context "context"
@@ -32,13 +32,13 @@ const (
 // Auth service definition
 type AuthServiceClient interface {
 	// Register a new user
-	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*SuccessResponse, error)
+	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error)
 	// Login user
 	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error)
 	// Logout user
 	Logout(ctx context.Context, in *LogoutRequest, opts ...grpc.CallOption) (*SuccessResponse, error)
 	// Verify token
-	Verify(ctx context.Context, in *VerifyRequest, opts ...grpc.CallOption) (*VerifyResponse, error)
+	Verify(ctx context.Context, in *VerifyRequest, opts ...grpc.CallOption) (*SuccessResponse, error)
 }
 
 type authServiceClient struct {
@@ -49,9 +49,9 @@ func NewAuthServiceClient(cc grpc.ClientConnInterface) AuthServiceClient {
 	return &authServiceClient{cc}
 }
 
-func (c *authServiceClient) Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*SuccessResponse, error) {
+func (c *authServiceClient) Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(SuccessResponse)
+	out := new(RegisterResponse)
 	err := c.cc.Invoke(ctx, AuthService_Register_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -79,9 +79,9 @@ func (c *authServiceClient) Logout(ctx context.Context, in *LogoutRequest, opts 
 	return out, nil
 }
 
-func (c *authServiceClient) Verify(ctx context.Context, in *VerifyRequest, opts ...grpc.CallOption) (*VerifyResponse, error) {
+func (c *authServiceClient) Verify(ctx context.Context, in *VerifyRequest, opts ...grpc.CallOption) (*SuccessResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(VerifyResponse)
+	out := new(SuccessResponse)
 	err := c.cc.Invoke(ctx, AuthService_Verify_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -96,13 +96,13 @@ func (c *authServiceClient) Verify(ctx context.Context, in *VerifyRequest, opts 
 // Auth service definition
 type AuthServiceServer interface {
 	// Register a new user
-	Register(context.Context, *RegisterRequest) (*SuccessResponse, error)
+	Register(context.Context, *RegisterRequest) (*RegisterResponse, error)
 	// Login user
 	Login(context.Context, *LoginRequest) (*LoginResponse, error)
 	// Logout user
 	Logout(context.Context, *LogoutRequest) (*SuccessResponse, error)
 	// Verify token
-	Verify(context.Context, *VerifyRequest) (*VerifyResponse, error)
+	Verify(context.Context, *VerifyRequest) (*SuccessResponse, error)
 	mustEmbedUnimplementedAuthServiceServer()
 }
 
@@ -113,7 +113,7 @@ type AuthServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedAuthServiceServer struct{}
 
-func (UnimplementedAuthServiceServer) Register(context.Context, *RegisterRequest) (*SuccessResponse, error) {
+func (UnimplementedAuthServiceServer) Register(context.Context, *RegisterRequest) (*RegisterResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Register not implemented")
 }
 func (UnimplementedAuthServiceServer) Login(context.Context, *LoginRequest) (*LoginResponse, error) {
@@ -122,7 +122,7 @@ func (UnimplementedAuthServiceServer) Login(context.Context, *LoginRequest) (*Lo
 func (UnimplementedAuthServiceServer) Logout(context.Context, *LogoutRequest) (*SuccessResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Logout not implemented")
 }
-func (UnimplementedAuthServiceServer) Verify(context.Context, *VerifyRequest) (*VerifyResponse, error) {
+func (UnimplementedAuthServiceServer) Verify(context.Context, *VerifyRequest) (*SuccessResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Verify not implemented")
 }
 func (UnimplementedAuthServiceServer) mustEmbedUnimplementedAuthServiceServer() {}
