@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+package github.com.igortoigildin.go.contacts.auth;
+
+import "proto/messages.proto";
+import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+option go_package = "auth/pkg/api/auth;auth";
+
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+  info: {
+    title: "Auth Service"
+    version: "1.0"
+    contact: {
+      name: "Toigildin"
+    }
+  };
+  schemes: HTTP;
+  consumes: "application/json";
+  produces: "application/json";
+};
+
+// Auth service definition
+service AuthService {
+  // Register a new user
+  rpc Register(RegisterRequest) returns (SuccessResponse) {
+    option (google.api.http) = {
+      post: "/auth/register"
+      body: "*"
+    };
+  }
+  
+  // Login user
+  rpc Login(LoginRequest) returns (LoginResponse) {
+    option (google.api.http) = {
+      post: "/auth/login"
+      body: "*"
+    };
+    }
+  
+  // Logout user
+  rpc Logout(LogoutRequest) returns (SuccessResponse) {
+    option (google.api.http) = {
+      post: "/auth/logout"
+      body: "*"
+    };
+  }
+  
+  // Verify token
+  rpc Verify(VerifyRequest) returns (VerifyResponse) {
+    option (google.api.http) = {
+      post: "/auth/verify"
+      body: "*"
+    };
+  }
+}
+

@@ -1,0 +1,161 @@
+syntax = "proto3";
+
+package github.com.igortoigildin.go.contacts.auth;
+
+import "buf/validate/validate.proto";
+import "google/api/field_behavior.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+option go_package = "auth/pkg/api/auth;auth";
+
+// Register request message
+message RegisterRequest {
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    json_schema: {
+      title: "RegisterRequest"
+      description: "Register request message"
+      required: ["username", "password"]
+    }
+  };
+  string username = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (buf.validate.field).string = {
+      min_len: 1,
+      max_len: 100
+    }
+  ];
+  string password = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (buf.validate.field).string = {
+      min_len: 1,
+      max_len: 100
+    }
+  ];
+}
+
+// Login request message
+message LoginRequest {
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    json_schema: {
+      title: "LoginRequest"
+      description: "Login request message"
+      required: ["username", "password"]
+    }
+  };
+  string username = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (buf.validate.field).string = {
+      min_len: 1,
+      max_len: 100
+    }
+  ];
+  string password = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (buf.validate.field).string = {
+      min_len: 1,
+      max_len: 100
+    }
+  ];
+}
+
+// Login response message
+message LoginResponse {
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    json_schema: {
+      title: "LoginResponse"
+      description: "Login response message"
+      required: ["token"]
+    }
+  };
+  string token = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (buf.validate.field).string = {
+      min_len: 1,
+      max_len: 100
+    }
+  ];
+}
+
+// Verify request message
+message VerifyRequest {
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    json_schema: {
+      title: "VerifyRequest"
+      description: "Verify request message"
+      required: ["token"]
+    }
+  };
+  string token = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (buf.validate.field).string = {
+      min_len: 1,
+      max_len: 100
+    }
+  ];
+}
+
+// Verify response message
+message VerifyResponse {
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    json_schema: {
+      title: "VerifyResponse"
+      description: "Verify response message"
+      required: ["valid"]
+    }
+  };
+  bool valid = 1;
+}
+
+// Logout request message
+message LogoutRequest {
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    json_schema: {
+      title: "LogoutRequest"
+      description: "Logout request message"
+      required: ["username", "token"]
+    }
+  };
+  string username = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (buf.validate.field).string = {
+      min_len: 1,
+      max_len: 100
+    }
+  ];
+  string token = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (buf.validate.field).string = {
+      min_len: 1,
+      max_len: 100
+    }
+  ];
+}
+
+// Success response message
+message SuccessResponse {
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    json_schema: {
+      title: "SuccessResponse"
+      description: "Success response message"
+      required: ["message"]
+    }
+  };
+  string message = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (buf.validate.field).string = {
+      min_len: 1,
+      max_len: 100
+    }
+  ];
+}
+// Error response message
+message ErrorResponse {
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    json_schema: {
+      title: "ErrorResponse"
+      description: "Error response message"
+      required: ["error"]
+    }
+  };
+  string error = 1;
+} 
