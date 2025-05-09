@@ -1,9 +1,8 @@
 package auth
 
-
 type (
 	RegistrationDTO struct {
-		Username string 
+		Username string
 		Password string
 	}
 
@@ -18,6 +17,6 @@ type (
 
 	VerifyDTO struct {
 		Username string
-		Token string
+		Token    string
 	}
 )

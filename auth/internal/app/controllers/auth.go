@@ -32,7 +32,6 @@ func (c *Controller) Register(ctx context.Context, req *pb.RegisterRequest) (*pb
 	return response, nil
 }
 
-
 func (c *Controller) Login(ctx context.Context, req *pb.LoginRequest) (*pb.LoginResponse, error) {
 	// 1. validate request
 	err := c.Validator.Validate(req)
@@ -40,7 +39,7 @@ func (c *Controller) Login(ctx context.Context, req *pb.LoginRequest) (*pb.Login
 		return nil, status.Errorf(codes.InvalidArgument, "invalid request: %v", err)
 	}
 
-	// 2. convert delivery models to domain models/DTO	
+	// 2. convert delivery models to domain models/DTO
 	loginDTO := newLoginDTOFromLoginRequest(req)
 
 	// 3. call usecase
@@ -64,7 +63,7 @@ func (c *Controller) Logout(ctx context.Context, req *pb.LogoutRequest) (*pb.Suc
 		return nil, status.Errorf(codes.InvalidArgument, "invalid request: %v", err)
 	}
 
-	// 2. convert delivery models to domain models/DTO	
+	// 2. convert delivery models to domain models/DTO
 	logoutDTO := newLogoutDTOFromLogoutRequest(req)
 
 	// 3. call usecase
@@ -72,7 +71,7 @@ func (c *Controller) Logout(ctx context.Context, req *pb.LogoutRequest) (*pb.Suc
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "failed to logout: %v", err)
 	}
-	
+
 	// 4. convert domain models to delivery models
 	response := &pb.SuccessResponse{
 		Message: "Logout successful",
@@ -87,8 +86,8 @@ func (c *Controller) Verify(ctx context.Context, req *pb.VerifyRequest) (*pb.Suc
 	if err != nil {
 		return nil, status.Errorf(codes.InvalidArgument, "invalid request: %v", err)
 	}
-	
-	// 2. convert delivery models to domain models/DTO	
+
+	// 2. convert delivery models to domain models/DTO
 	verifyDTO := newVerifyDTOFromVerifyRequest(req)
 
 	// 3. call usecase

@@ -16,11 +16,11 @@ import (
 )
 
 type Config struct {
-	GRPCPort string
+	GRPCPort        string
 	GRPCGatewayPort string
 
 	ChainUnaryInterceptors []grpc.UnaryServerInterceptor
-	UnaryInterceptors []grpc.UnaryServerInterceptor
+	UnaryInterceptors      []grpc.UnaryServerInterceptor
 }
 
 type Controllers struct {
@@ -31,12 +31,12 @@ type Server struct {
 	Controllers
 
 	grpc struct {
-		lis net.Listener
+		lis    net.Listener
 		server *grpc.Server
 	}
 
 	grpcGateway struct {
-		lis net.Listener
+		lis    net.Listener
 		server *http.Server
 	}
 }
@@ -113,7 +113,7 @@ func (s *Server) Run(ctx context.Context) error {
 		log.Println("start serve grpc gateway", s.grpcGateway.lis.Addr())
 		return fmt.Errorf("server: serve grpc gateway: %w", s.grpcGateway.server.Serve(s.grpcGateway.lis))
 	})
-	
+
 	return group.Wait()
 }
 

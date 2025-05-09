@@ -2,6 +2,8 @@ package auth
 
 import (
 	"context"
+
+	"github.com/igortoigildin/go-contacts/auth/internal/app/models"
 )
 
 type Usecase interface {
@@ -10,7 +12,6 @@ type Usecase interface {
 	Logout(ctx context.Context, userInfo *LogoutDTO) (username string, err error)
 	Verify(ctx context.Context, userInfo *VerifyDTO) (username string, err error)
 }
-
 
 var (
 	_ Usecase = (*usecase)(nil)
@@ -28,5 +29,12 @@ func NewUsecase(deps Deps) *usecase {
 }
 
 type Deps struct {
-	// UserRepository repository.UserRepository
+	UserService UserService
 }
+
+type (
+	UserService interface {
+		CreateUser(ctx context.Context, user *models.User) error
+		GetUserByUsername(ctx context.Context, username string) (*models.User, error)
+	}
+)

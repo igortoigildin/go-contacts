@@ -18,7 +18,7 @@ func protovalidateVialationsToGoogleViolations(vs []*protovalidate.Violation) []
 			Field:       v.FieldValue.String(),
 			Description: v.Proto.GetMessage(),
 		}
-		
+
 	}
 
 	return res
