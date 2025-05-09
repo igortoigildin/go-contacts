@@ -1,36 +1,15 @@
 package main
 
 import (
-	"net/http"
-	"os"
-	"time"
+	"log"
 
-	subscriber "github.com/igortoigildin/go-contacts/subscriber/internal/api"
-	"github.com/labstack/echo/v4"
+	"github.com/igortoigildin/go-contacts/subscriber/internal/app"
 )
 
 
-// TODO: to be updated. Please refer to USER service
 func main() {
-	e := echo.New()
-
-	// Subscriber routes
-	e.POST("/subscriber/request", subscriber.MakeFriendRequestHandler)
-	e.POST("/subscriber/accept", subscriber.AcceptFriendHandler)
-	e.POST("/subscriber/reject", subscriber.RejectFriendHandler)
-	e.DELETE("/subscriber", subscriber.RemoveFriendHandler)
-	e.GET("/subscriber/:id", subscriber.GetFriendsHandler)
-
-	e.GET("/health/ready", func(c echo.Context) error {
-		return c.JSON(http.StatusOK, map[string]string{"status": "ok"})
-	})
-
-	httpPort := os.Getenv("PORT")
-	if httpPort == "" {
-		httpPort = "8080"
+	app := app.New()
+	if err := app.Run(); err != nil {
+		log.Fatalf("failed to run app: %v", err)
 	}
-
-	time.Sleep(5 * time.Second)
-
-	e.Logger.Fatal(e.Start(":" + httpPort))
 }
