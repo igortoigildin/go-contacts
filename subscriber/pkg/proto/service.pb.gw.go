@@ -35,7 +35,7 @@ var (
 	_ = metadata.Join
 )
 
-func request_FriendRequestService_MakeFriendRequest_0(ctx context.Context, marshaler runtime.Marshaler, client FriendRequestServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_SubscriberService_MakeFriendRequest_0(ctx context.Context, marshaler runtime.Marshaler, client SubscriberServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq FriendRequest
 		metadata runtime.ServerMetadata
@@ -47,7 +47,7 @@ func request_FriendRequestService_MakeFriendRequest_0(ctx context.Context, marsh
 	return msg, metadata, err
 }
 
-func local_request_FriendRequestService_MakeFriendRequest_0(ctx context.Context, marshaler runtime.Marshaler, server FriendRequestServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_SubscriberService_MakeFriendRequest_0(ctx context.Context, marshaler runtime.Marshaler, server SubscriberServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq FriendRequest
 		metadata runtime.ServerMetadata
@@ -59,7 +59,7 @@ func local_request_FriendRequestService_MakeFriendRequest_0(ctx context.Context,
 	return msg, metadata, err
 }
 
-func request_FriendAcceptService_AcceptFriend_0(ctx context.Context, marshaler runtime.Marshaler, client FriendAcceptServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_SubscriberService_AcceptFriend_0(ctx context.Context, marshaler runtime.Marshaler, client SubscriberServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq FriendAcceptRequest
 		metadata runtime.ServerMetadata
@@ -71,7 +71,7 @@ func request_FriendAcceptService_AcceptFriend_0(ctx context.Context, marshaler r
 	return msg, metadata, err
 }
 
-func local_request_FriendAcceptService_AcceptFriend_0(ctx context.Context, marshaler runtime.Marshaler, server FriendAcceptServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_SubscriberService_AcceptFriend_0(ctx context.Context, marshaler runtime.Marshaler, server SubscriberServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq FriendAcceptRequest
 		metadata runtime.ServerMetadata
@@ -83,7 +83,7 @@ func local_request_FriendAcceptService_AcceptFriend_0(ctx context.Context, marsh
 	return msg, metadata, err
 }
 
-func request_FriendRejectService_RejectFriend_0(ctx context.Context, marshaler runtime.Marshaler, client FriendRejectServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_SubscriberService_RejectFriend_0(ctx context.Context, marshaler runtime.Marshaler, client SubscriberServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq RejectFriendRequest
 		metadata runtime.ServerMetadata
@@ -95,7 +95,7 @@ func request_FriendRejectService_RejectFriend_0(ctx context.Context, marshaler r
 	return msg, metadata, err
 }
 
-func local_request_FriendRejectService_RejectFriend_0(ctx context.Context, marshaler runtime.Marshaler, server FriendRejectServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_SubscriberService_RejectFriend_0(ctx context.Context, marshaler runtime.Marshaler, server SubscriberServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq RejectFriendRequest
 		metadata runtime.ServerMetadata
@@ -107,207 +107,189 @@ func local_request_FriendRejectService_RejectFriend_0(ctx context.Context, marsh
 	return msg, metadata, err
 }
 
-func request_FriendRemoveService_RemoveFriend_0(ctx context.Context, marshaler runtime.Marshaler, client FriendRemoveServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+var filter_SubscriberService_RemoveFriend_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
+
+func request_SubscriberService_RemoveFriend_0(ctx context.Context, marshaler runtime.Marshaler, client SubscriberServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq RemoveFriendRequest
 		metadata runtime.ServerMetadata
 	)
-	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
+	io.Copy(io.Discard, req.Body)
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_SubscriberService_RemoveFriend_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 	msg, err := client.RemoveFriend(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 }
 
-func local_request_FriendRemoveService_RemoveFriend_0(ctx context.Context, marshaler runtime.Marshaler, server FriendRemoveServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_SubscriberService_RemoveFriend_0(ctx context.Context, marshaler runtime.Marshaler, server SubscriberServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq RemoveFriendRequest
 		metadata runtime.ServerMetadata
 	)
-	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_SubscriberService_RemoveFriend_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 	msg, err := server.RemoveFriend(ctx, &protoReq)
 	return msg, metadata, err
 }
 
-func request_FriendListService_ListFriends_0(ctx context.Context, marshaler runtime.Marshaler, client FriendListServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_SubscriberService_ListFriends_0(ctx context.Context, marshaler runtime.Marshaler, client SubscriberServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq ListFriendsRequest
 		metadata runtime.ServerMetadata
+		err      error
 	)
-	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	io.Copy(io.Discard, req.Body)
+	val, ok := pathParams["username"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "username")
+	}
+	protoReq.Username, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "username", err)
 	}
 	msg, err := client.ListFriends(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 }
 
-func local_request_FriendListService_ListFriends_0(ctx context.Context, marshaler runtime.Marshaler, server FriendListServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_SubscriberService_ListFriends_0(ctx context.Context, marshaler runtime.Marshaler, server SubscriberServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq ListFriendsRequest
 		metadata runtime.ServerMetadata
+		err      error
 	)
-	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	val, ok := pathParams["username"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "username")
+	}
+	protoReq.Username, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "username", err)
 	}
 	msg, err := server.ListFriends(ctx, &protoReq)
 	return msg, metadata, err
 }
 
-// RegisterFriendRequestServiceHandlerServer registers the http handlers for service FriendRequestService to "mux".
-// UnaryRPC     :call FriendRequestServiceServer directly.
+// RegisterSubscriberServiceHandlerServer registers the http handlers for service SubscriberService to "mux".
+// UnaryRPC     :call SubscriberServiceServer directly.
 // StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
-// Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterFriendRequestServiceHandlerFromEndpoint instead.
+// Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterSubscriberServiceHandlerFromEndpoint instead.
 // GRPC interceptors will not work for this type of registration. To use interceptors, you must use the "runtime.WithMiddlewares" option in the "runtime.NewServeMux" call.
-func RegisterFriendRequestServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server FriendRequestServiceServer) error {
-	mux.Handle(http.MethodPost, pattern_FriendRequestService_MakeFriendRequest_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+func RegisterSubscriberServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server SubscriberServiceServer) error {
+	mux.Handle(http.MethodPost, pattern_SubscriberService_MakeFriendRequest_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/github.com.igortoigildin.go.contacts.subscriber.FriendRequestService/MakeFriendRequest", runtime.WithHTTPPathPattern("/github.com.igortoigildin.go.contacts.subscriber.FriendRequestService/MakeFriendRequest"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/github.com.igortoigildin.go.contacts.subscriber.SubscriberService/MakeFriendRequest", runtime.WithHTTPPathPattern("/api/v1/subscriber/request"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_FriendRequestService_MakeFriendRequest_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_SubscriberService_MakeFriendRequest_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		forward_FriendRequestService_MakeFriendRequest_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_SubscriberService_MakeFriendRequest_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 	})
-
-	return nil
-}
-
-// RegisterFriendAcceptServiceHandlerServer registers the http handlers for service FriendAcceptService to "mux".
-// UnaryRPC     :call FriendAcceptServiceServer directly.
-// StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
-// Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterFriendAcceptServiceHandlerFromEndpoint instead.
-// GRPC interceptors will not work for this type of registration. To use interceptors, you must use the "runtime.WithMiddlewares" option in the "runtime.NewServeMux" call.
-func RegisterFriendAcceptServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server FriendAcceptServiceServer) error {
-	mux.Handle(http.MethodPost, pattern_FriendAcceptService_AcceptFriend_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle(http.MethodPost, pattern_SubscriberService_AcceptFriend_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/github.com.igortoigildin.go.contacts.subscriber.FriendAcceptService/AcceptFriend", runtime.WithHTTPPathPattern("/github.com.igortoigildin.go.contacts.subscriber.FriendAcceptService/AcceptFriend"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/github.com.igortoigildin.go.contacts.subscriber.SubscriberService/AcceptFriend", runtime.WithHTTPPathPattern("/api/v1/subscriber/accept"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_FriendAcceptService_AcceptFriend_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_SubscriberService_AcceptFriend_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		forward_FriendAcceptService_AcceptFriend_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_SubscriberService_AcceptFriend_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 	})
-
-	return nil
-}
-
-// RegisterFriendRejectServiceHandlerServer registers the http handlers for service FriendRejectService to "mux".
-// UnaryRPC     :call FriendRejectServiceServer directly.
-// StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
-// Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterFriendRejectServiceHandlerFromEndpoint instead.
-// GRPC interceptors will not work for this type of registration. To use interceptors, you must use the "runtime.WithMiddlewares" option in the "runtime.NewServeMux" call.
-func RegisterFriendRejectServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server FriendRejectServiceServer) error {
-	mux.Handle(http.MethodPost, pattern_FriendRejectService_RejectFriend_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle(http.MethodPost, pattern_SubscriberService_RejectFriend_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/github.com.igortoigildin.go.contacts.subscriber.FriendRejectService/RejectFriend", runtime.WithHTTPPathPattern("/github.com.igortoigildin.go.contacts.subscriber.FriendRejectService/RejectFriend"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/github.com.igortoigildin.go.contacts.subscriber.SubscriberService/RejectFriend", runtime.WithHTTPPathPattern("/api/v1/subscriber/reject"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_FriendRejectService_RejectFriend_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_SubscriberService_RejectFriend_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		forward_FriendRejectService_RejectFriend_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_SubscriberService_RejectFriend_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 	})
-
-	return nil
-}
-
-// RegisterFriendRemoveServiceHandlerServer registers the http handlers for service FriendRemoveService to "mux".
-// UnaryRPC     :call FriendRemoveServiceServer directly.
-// StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
-// Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterFriendRemoveServiceHandlerFromEndpoint instead.
-// GRPC interceptors will not work for this type of registration. To use interceptors, you must use the "runtime.WithMiddlewares" option in the "runtime.NewServeMux" call.
-func RegisterFriendRemoveServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server FriendRemoveServiceServer) error {
-	mux.Handle(http.MethodPost, pattern_FriendRemoveService_RemoveFriend_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle(http.MethodDelete, pattern_SubscriberService_RemoveFriend_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/github.com.igortoigildin.go.contacts.subscriber.FriendRemoveService/RemoveFriend", runtime.WithHTTPPathPattern("/github.com.igortoigildin.go.contacts.subscriber.FriendRemoveService/RemoveFriend"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/github.com.igortoigildin.go.contacts.subscriber.SubscriberService/RemoveFriend", runtime.WithHTTPPathPattern("/api/v1/subscriber"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_FriendRemoveService_RemoveFriend_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_SubscriberService_RemoveFriend_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		forward_FriendRemoveService_RemoveFriend_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_SubscriberService_RemoveFriend_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 	})
-
-	return nil
-}
-
-// RegisterFriendListServiceHandlerServer registers the http handlers for service FriendListService to "mux".
-// UnaryRPC     :call FriendListServiceServer directly.
-// StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
-// Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterFriendListServiceHandlerFromEndpoint instead.
-// GRPC interceptors will not work for this type of registration. To use interceptors, you must use the "runtime.WithMiddlewares" option in the "runtime.NewServeMux" call.
-func RegisterFriendListServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server FriendListServiceServer) error {
-	mux.Handle(http.MethodPost, pattern_FriendListService_ListFriends_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle(http.MethodGet, pattern_SubscriberService_ListFriends_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/github.com.igortoigildin.go.contacts.subscriber.FriendListService/ListFriends", runtime.WithHTTPPathPattern("/github.com.igortoigildin.go.contacts.subscriber.FriendListService/ListFriends"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/github.com.igortoigildin.go.contacts.subscriber.SubscriberService/ListFriends", runtime.WithHTTPPathPattern("/api/v1/subscriber/{username}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_FriendListService_ListFriends_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_SubscriberService_ListFriends_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		forward_FriendListService_ListFriends_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_SubscriberService_ListFriends_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 	})
 
 	return nil
 }
 
-// RegisterFriendRequestServiceHandlerFromEndpoint is same as RegisterFriendRequestServiceHandler but
+// RegisterSubscriberServiceHandlerFromEndpoint is same as RegisterSubscriberServiceHandler but
 // automatically dials to "endpoint" and closes the connection when "ctx" gets done.
-func RegisterFriendRequestServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
+func RegisterSubscriberServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
 	conn, err := grpc.NewClient(endpoint, opts...)
 	if err != nil {
 		return err
@@ -326,301 +308,121 @@ func RegisterFriendRequestServiceHandlerFromEndpoint(ctx context.Context, mux *r
 			}
 		}()
 	}()
-	return RegisterFriendRequestServiceHandler(ctx, mux, conn)
+	return RegisterSubscriberServiceHandler(ctx, mux, conn)
 }
 
-// RegisterFriendRequestServiceHandler registers the http handlers for service FriendRequestService to "mux".
+// RegisterSubscriberServiceHandler registers the http handlers for service SubscriberService to "mux".
 // The handlers forward requests to the grpc endpoint over "conn".
-func RegisterFriendRequestServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
-	return RegisterFriendRequestServiceHandlerClient(ctx, mux, NewFriendRequestServiceClient(conn))
+func RegisterSubscriberServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
+	return RegisterSubscriberServiceHandlerClient(ctx, mux, NewSubscriberServiceClient(conn))
 }
 
-// RegisterFriendRequestServiceHandlerClient registers the http handlers for service FriendRequestService
-// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "FriendRequestServiceClient".
-// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "FriendRequestServiceClient"
+// RegisterSubscriberServiceHandlerClient registers the http handlers for service SubscriberService
+// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "SubscriberServiceClient".
+// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "SubscriberServiceClient"
 // doesn't go through the normal gRPC flow (creating a gRPC client etc.) then it will be up to the passed in
-// "FriendRequestServiceClient" to call the correct interceptors. This client ignores the HTTP middlewares.
-func RegisterFriendRequestServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client FriendRequestServiceClient) error {
-	mux.Handle(http.MethodPost, pattern_FriendRequestService_MakeFriendRequest_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+// "SubscriberServiceClient" to call the correct interceptors. This client ignores the HTTP middlewares.
+func RegisterSubscriberServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client SubscriberServiceClient) error {
+	mux.Handle(http.MethodPost, pattern_SubscriberService_MakeFriendRequest_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/github.com.igortoigildin.go.contacts.subscriber.FriendRequestService/MakeFriendRequest", runtime.WithHTTPPathPattern("/github.com.igortoigildin.go.contacts.subscriber.FriendRequestService/MakeFriendRequest"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/github.com.igortoigildin.go.contacts.subscriber.SubscriberService/MakeFriendRequest", runtime.WithHTTPPathPattern("/api/v1/subscriber/request"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_FriendRequestService_MakeFriendRequest_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_SubscriberService_MakeFriendRequest_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		forward_FriendRequestService_MakeFriendRequest_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_SubscriberService_MakeFriendRequest_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 	})
-	return nil
-}
-
-var (
-	pattern_FriendRequestService_MakeFriendRequest_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"github.com.igortoigildin.go.contacts.subscriber.FriendRequestService", "MakeFriendRequest"}, ""))
-)
-
-var (
-	forward_FriendRequestService_MakeFriendRequest_0 = runtime.ForwardResponseMessage
-)
-
-// RegisterFriendAcceptServiceHandlerFromEndpoint is same as RegisterFriendAcceptServiceHandler but
-// automatically dials to "endpoint" and closes the connection when "ctx" gets done.
-func RegisterFriendAcceptServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
-	conn, err := grpc.NewClient(endpoint, opts...)
-	if err != nil {
-		return err
-	}
-	defer func() {
-		if err != nil {
-			if cerr := conn.Close(); cerr != nil {
-				grpclog.Errorf("Failed to close conn to %s: %v", endpoint, cerr)
-			}
-			return
-		}
-		go func() {
-			<-ctx.Done()
-			if cerr := conn.Close(); cerr != nil {
-				grpclog.Errorf("Failed to close conn to %s: %v", endpoint, cerr)
-			}
-		}()
-	}()
-	return RegisterFriendAcceptServiceHandler(ctx, mux, conn)
-}
-
-// RegisterFriendAcceptServiceHandler registers the http handlers for service FriendAcceptService to "mux".
-// The handlers forward requests to the grpc endpoint over "conn".
-func RegisterFriendAcceptServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
-	return RegisterFriendAcceptServiceHandlerClient(ctx, mux, NewFriendAcceptServiceClient(conn))
-}
-
-// RegisterFriendAcceptServiceHandlerClient registers the http handlers for service FriendAcceptService
-// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "FriendAcceptServiceClient".
-// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "FriendAcceptServiceClient"
-// doesn't go through the normal gRPC flow (creating a gRPC client etc.) then it will be up to the passed in
-// "FriendAcceptServiceClient" to call the correct interceptors. This client ignores the HTTP middlewares.
-func RegisterFriendAcceptServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client FriendAcceptServiceClient) error {
-	mux.Handle(http.MethodPost, pattern_FriendAcceptService_AcceptFriend_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle(http.MethodPost, pattern_SubscriberService_AcceptFriend_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/github.com.igortoigildin.go.contacts.subscriber.FriendAcceptService/AcceptFriend", runtime.WithHTTPPathPattern("/github.com.igortoigildin.go.contacts.subscriber.FriendAcceptService/AcceptFriend"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/github.com.igortoigildin.go.contacts.subscriber.SubscriberService/AcceptFriend", runtime.WithHTTPPathPattern("/api/v1/subscriber/accept"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_FriendAcceptService_AcceptFriend_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_SubscriberService_AcceptFriend_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		forward_FriendAcceptService_AcceptFriend_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_SubscriberService_AcceptFriend_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 	})
-	return nil
-}
-
-var (
-	pattern_FriendAcceptService_AcceptFriend_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"github.com.igortoigildin.go.contacts.subscriber.FriendAcceptService", "AcceptFriend"}, ""))
-)
-
-var (
-	forward_FriendAcceptService_AcceptFriend_0 = runtime.ForwardResponseMessage
-)
-
-// RegisterFriendRejectServiceHandlerFromEndpoint is same as RegisterFriendRejectServiceHandler but
-// automatically dials to "endpoint" and closes the connection when "ctx" gets done.
-func RegisterFriendRejectServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
-	conn, err := grpc.NewClient(endpoint, opts...)
-	if err != nil {
-		return err
-	}
-	defer func() {
-		if err != nil {
-			if cerr := conn.Close(); cerr != nil {
-				grpclog.Errorf("Failed to close conn to %s: %v", endpoint, cerr)
-			}
-			return
-		}
-		go func() {
-			<-ctx.Done()
-			if cerr := conn.Close(); cerr != nil {
-				grpclog.Errorf("Failed to close conn to %s: %v", endpoint, cerr)
-			}
-		}()
-	}()
-	return RegisterFriendRejectServiceHandler(ctx, mux, conn)
-}
-
-// RegisterFriendRejectServiceHandler registers the http handlers for service FriendRejectService to "mux".
-// The handlers forward requests to the grpc endpoint over "conn".
-func RegisterFriendRejectServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
-	return RegisterFriendRejectServiceHandlerClient(ctx, mux, NewFriendRejectServiceClient(conn))
-}
-
-// RegisterFriendRejectServiceHandlerClient registers the http handlers for service FriendRejectService
-// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "FriendRejectServiceClient".
-// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "FriendRejectServiceClient"
-// doesn't go through the normal gRPC flow (creating a gRPC client etc.) then it will be up to the passed in
-// "FriendRejectServiceClient" to call the correct interceptors. This client ignores the HTTP middlewares.
-func RegisterFriendRejectServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client FriendRejectServiceClient) error {
-	mux.Handle(http.MethodPost, pattern_FriendRejectService_RejectFriend_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle(http.MethodPost, pattern_SubscriberService_RejectFriend_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/github.com.igortoigildin.go.contacts.subscriber.FriendRejectService/RejectFriend", runtime.WithHTTPPathPattern("/github.com.igortoigildin.go.contacts.subscriber.FriendRejectService/RejectFriend"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/github.com.igortoigildin.go.contacts.subscriber.SubscriberService/RejectFriend", runtime.WithHTTPPathPattern("/api/v1/subscriber/reject"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_FriendRejectService_RejectFriend_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_SubscriberService_RejectFriend_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		forward_FriendRejectService_RejectFriend_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_SubscriberService_RejectFriend_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 	})
-	return nil
-}
-
-var (
-	pattern_FriendRejectService_RejectFriend_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"github.com.igortoigildin.go.contacts.subscriber.FriendRejectService", "RejectFriend"}, ""))
-)
-
-var (
-	forward_FriendRejectService_RejectFriend_0 = runtime.ForwardResponseMessage
-)
-
-// RegisterFriendRemoveServiceHandlerFromEndpoint is same as RegisterFriendRemoveServiceHandler but
-// automatically dials to "endpoint" and closes the connection when "ctx" gets done.
-func RegisterFriendRemoveServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
-	conn, err := grpc.NewClient(endpoint, opts...)
-	if err != nil {
-		return err
-	}
-	defer func() {
-		if err != nil {
-			if cerr := conn.Close(); cerr != nil {
-				grpclog.Errorf("Failed to close conn to %s: %v", endpoint, cerr)
-			}
-			return
-		}
-		go func() {
-			<-ctx.Done()
-			if cerr := conn.Close(); cerr != nil {
-				grpclog.Errorf("Failed to close conn to %s: %v", endpoint, cerr)
-			}
-		}()
-	}()
-	return RegisterFriendRemoveServiceHandler(ctx, mux, conn)
-}
-
-// RegisterFriendRemoveServiceHandler registers the http handlers for service FriendRemoveService to "mux".
-// The handlers forward requests to the grpc endpoint over "conn".
-func RegisterFriendRemoveServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
-	return RegisterFriendRemoveServiceHandlerClient(ctx, mux, NewFriendRemoveServiceClient(conn))
-}
-
-// RegisterFriendRemoveServiceHandlerClient registers the http handlers for service FriendRemoveService
-// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "FriendRemoveServiceClient".
-// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "FriendRemoveServiceClient"
-// doesn't go through the normal gRPC flow (creating a gRPC client etc.) then it will be up to the passed in
-// "FriendRemoveServiceClient" to call the correct interceptors. This client ignores the HTTP middlewares.
-func RegisterFriendRemoveServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client FriendRemoveServiceClient) error {
-	mux.Handle(http.MethodPost, pattern_FriendRemoveService_RemoveFriend_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle(http.MethodDelete, pattern_SubscriberService_RemoveFriend_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/github.com.igortoigildin.go.contacts.subscriber.FriendRemoveService/RemoveFriend", runtime.WithHTTPPathPattern("/github.com.igortoigildin.go.contacts.subscriber.FriendRemoveService/RemoveFriend"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/github.com.igortoigildin.go.contacts.subscriber.SubscriberService/RemoveFriend", runtime.WithHTTPPathPattern("/api/v1/subscriber"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_FriendRemoveService_RemoveFriend_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_SubscriberService_RemoveFriend_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		forward_FriendRemoveService_RemoveFriend_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_SubscriberService_RemoveFriend_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 	})
-	return nil
-}
-
-var (
-	pattern_FriendRemoveService_RemoveFriend_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"github.com.igortoigildin.go.contacts.subscriber.FriendRemoveService", "RemoveFriend"}, ""))
-)
-
-var (
-	forward_FriendRemoveService_RemoveFriend_0 = runtime.ForwardResponseMessage
-)
-
-// RegisterFriendListServiceHandlerFromEndpoint is same as RegisterFriendListServiceHandler but
-// automatically dials to "endpoint" and closes the connection when "ctx" gets done.
-func RegisterFriendListServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
-	conn, err := grpc.NewClient(endpoint, opts...)
-	if err != nil {
-		return err
-	}
-	defer func() {
-		if err != nil {
-			if cerr := conn.Close(); cerr != nil {
-				grpclog.Errorf("Failed to close conn to %s: %v", endpoint, cerr)
-			}
-			return
-		}
-		go func() {
-			<-ctx.Done()
-			if cerr := conn.Close(); cerr != nil {
-				grpclog.Errorf("Failed to close conn to %s: %v", endpoint, cerr)
-			}
-		}()
-	}()
-	return RegisterFriendListServiceHandler(ctx, mux, conn)
-}
-
-// RegisterFriendListServiceHandler registers the http handlers for service FriendListService to "mux".
-// The handlers forward requests to the grpc endpoint over "conn".
-func RegisterFriendListServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
-	return RegisterFriendListServiceHandlerClient(ctx, mux, NewFriendListServiceClient(conn))
-}
-
-// RegisterFriendListServiceHandlerClient registers the http handlers for service FriendListService
-// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "FriendListServiceClient".
-// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "FriendListServiceClient"
-// doesn't go through the normal gRPC flow (creating a gRPC client etc.) then it will be up to the passed in
-// "FriendListServiceClient" to call the correct interceptors. This client ignores the HTTP middlewares.
-func RegisterFriendListServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client FriendListServiceClient) error {
-	mux.Handle(http.MethodPost, pattern_FriendListService_ListFriends_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle(http.MethodGet, pattern_SubscriberService_ListFriends_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/github.com.igortoigildin.go.contacts.subscriber.FriendListService/ListFriends", runtime.WithHTTPPathPattern("/github.com.igortoigildin.go.contacts.subscriber.FriendListService/ListFriends"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/github.com.igortoigildin.go.contacts.subscriber.SubscriberService/ListFriends", runtime.WithHTTPPathPattern("/api/v1/subscriber/{username}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_FriendListService_ListFriends_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_SubscriberService_ListFriends_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		forward_FriendListService_ListFriends_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_SubscriberService_ListFriends_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 	})
 	return nil
 }
 
 var (
-	pattern_FriendListService_ListFriends_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"github.com.igortoigildin.go.contacts.subscriber.FriendListService", "ListFriends"}, ""))
+	pattern_SubscriberService_MakeFriendRequest_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "v1", "subscriber", "request"}, ""))
+	pattern_SubscriberService_AcceptFriend_0      = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "v1", "subscriber", "accept"}, ""))
+	pattern_SubscriberService_RejectFriend_0      = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "v1", "subscriber", "reject"}, ""))
+	pattern_SubscriberService_RemoveFriend_0      = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"api", "v1", "subscriber"}, ""))
+	pattern_SubscriberService_ListFriends_0       = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"api", "v1", "subscriber", "username"}, ""))
 )
 
 var (
-	forward_FriendListService_ListFriends_0 = runtime.ForwardResponseMessage
+	forward_SubscriberService_MakeFriendRequest_0 = runtime.ForwardResponseMessage
+	forward_SubscriberService_AcceptFriend_0      = runtime.ForwardResponseMessage
+	forward_SubscriberService_RejectFriend_0      = runtime.ForwardResponseMessage
+	forward_SubscriberService_RemoveFriend_0      = runtime.ForwardResponseMessage
+	forward_SubscriberService_ListFriends_0       = runtime.ForwardResponseMessage
 )

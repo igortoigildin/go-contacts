@@ -2,16 +2,17 @@ module github.com/igortoigildin/go-contacts/subscriber
 
 go 1.24.2
 
-require github.com/labstack/echo/v4 v4.13.3
+require (
+	github.com/grpc-ecosystem/grpc-gateway/v2 v2.26.3
+	golang.org/x/sync v0.12.0
+	google.golang.org/genproto/googleapis/api v0.0.0-20250505200425-f936aa4a68b2
+	google.golang.org/grpc v1.72.0
+	google.golang.org/protobuf v1.36.6
+)
 
 require (
-	github.com/labstack/gommon v0.4.2 // indirect
-	github.com/mattn/go-colorable v0.1.13 // indirect
-	github.com/mattn/go-isatty v0.0.20 // indirect
-	github.com/valyala/bytebufferpool v1.0.0 // indirect
-	github.com/valyala/fasttemplate v1.2.2 // indirect
-	golang.org/x/crypto v0.31.0 // indirect
-	golang.org/x/net v0.33.0 // indirect
-	golang.org/x/sys v0.28.0 // indirect
-	golang.org/x/text v0.21.0 // indirect
+	golang.org/x/net v0.37.0 // indirect
+	golang.org/x/sys v0.31.0 // indirect
+	golang.org/x/text v0.23.0 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20250428153025-10db94c68c34 // indirect
 )

@@ -9,29 +9,44 @@ import "google/protobuf/empty.proto";
 
 option go_package = "github.com/igortoigildin/go-contacts/subscriber/pkg/proto;proto";
 
+// Friend service definition
+service SubscriberService {
+  // Send a friend request
+  rpc MakeFriendRequest(FriendRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/api/v1/subscriber/request"
+      body: "*"
+    };
+  }
 
-// Отправка заявки в друзья
-service FriendRequestService {
-  rpc MakeFriendRequest(FriendRequest) returns (google.protobuf.Empty);
-}
+  // Accept a friend request
+  rpc AcceptFriend(FriendAcceptRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/api/v1/subscriber/accept"
+      body: "*"
+    };
+  }
 
-// Принятие заявки
-service FriendAcceptService {
-  rpc AcceptFriend(FriendAcceptRequest) returns (google.protobuf.Empty);
-}
+  // Reject a friend request
+  rpc RejectFriend(RejectFriendRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/api/v1/subscriber/reject"
+      body: "*"
+    };
+  }
 
-// Отклонение заявки
-service FriendRejectService {
-  rpc RejectFriend(RejectFriendRequest) returns (google.protobuf.Empty);
-}
+  // Remove a friend
+  rpc RemoveFriend(RemoveFriendRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/api/v1/subscriber"
+    };
+  }
 
-// Удаление друга
-service FriendRemoveService {
-  rpc RemoveFriend(RemoveFriendRequest) returns (google.protobuf.Empty);
-}
-
-// Получение списка друзей
-service FriendListService {
-  rpc ListFriends(ListFriendsRequest) returns (ListFriendsResponse);
+  // Get list of friends
+  rpc ListFriends(ListFriendsRequest) returns (ListFriendsResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/subscriber/{username}"
+    };
+  }
 }
 

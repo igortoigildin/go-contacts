@@ -20,529 +20,267 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	FriendRequestService_MakeFriendRequest_FullMethodName = "/github.com.igortoigildin.go.contacts.subscriber.FriendRequestService/MakeFriendRequest"
+	SubscriberService_MakeFriendRequest_FullMethodName = "/github.com.igortoigildin.go.contacts.subscriber.SubscriberService/MakeFriendRequest"
+	SubscriberService_AcceptFriend_FullMethodName      = "/github.com.igortoigildin.go.contacts.subscriber.SubscriberService/AcceptFriend"
+	SubscriberService_RejectFriend_FullMethodName      = "/github.com.igortoigildin.go.contacts.subscriber.SubscriberService/RejectFriend"
+	SubscriberService_RemoveFriend_FullMethodName      = "/github.com.igortoigildin.go.contacts.subscriber.SubscriberService/RemoveFriend"
+	SubscriberService_ListFriends_FullMethodName       = "/github.com.igortoigildin.go.contacts.subscriber.SubscriberService/ListFriends"
 )
 
-// FriendRequestServiceClient is the client API for FriendRequestService service.
+// SubscriberServiceClient is the client API for SubscriberService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 //
-// Отправка заявки в друзья
-type FriendRequestServiceClient interface {
+// Friend service definition
+type SubscriberServiceClient interface {
+	// Send a friend request
 	MakeFriendRequest(ctx context.Context, in *FriendRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// Accept a friend request
+	AcceptFriend(ctx context.Context, in *FriendAcceptRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// Reject a friend request
+	RejectFriend(ctx context.Context, in *RejectFriendRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// Remove a friend
+	RemoveFriend(ctx context.Context, in *RemoveFriendRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// Get list of friends
+	ListFriends(ctx context.Context, in *ListFriendsRequest, opts ...grpc.CallOption) (*ListFriendsResponse, error)
 }
 
-type friendRequestServiceClient struct {
+type subscriberServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewFriendRequestServiceClient(cc grpc.ClientConnInterface) FriendRequestServiceClient {
-	return &friendRequestServiceClient{cc}
+func NewSubscriberServiceClient(cc grpc.ClientConnInterface) SubscriberServiceClient {
+	return &subscriberServiceClient{cc}
 }
 
-func (c *friendRequestServiceClient) MakeFriendRequest(ctx context.Context, in *FriendRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *subscriberServiceClient) MakeFriendRequest(ctx context.Context, in *FriendRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, FriendRequestService_MakeFriendRequest_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, SubscriberService_MakeFriendRequest_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// FriendRequestServiceServer is the server API for FriendRequestService service.
-// All implementations must embed UnimplementedFriendRequestServiceServer
-// for forward compatibility.
-//
-// Отправка заявки в друзья
-type FriendRequestServiceServer interface {
-	MakeFriendRequest(context.Context, *FriendRequest) (*emptypb.Empty, error)
-	mustEmbedUnimplementedFriendRequestServiceServer()
+func (c *subscriberServiceClient) AcceptFriend(ctx context.Context, in *FriendAcceptRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, SubscriberService_AcceptFriend_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// UnimplementedFriendRequestServiceServer must be embedded to have
+func (c *subscriberServiceClient) RejectFriend(ctx context.Context, in *RejectFriendRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, SubscriberService_RejectFriend_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *subscriberServiceClient) RemoveFriend(ctx context.Context, in *RemoveFriendRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, SubscriberService_RemoveFriend_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *subscriberServiceClient) ListFriends(ctx context.Context, in *ListFriendsRequest, opts ...grpc.CallOption) (*ListFriendsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListFriendsResponse)
+	err := c.cc.Invoke(ctx, SubscriberService_ListFriends_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// SubscriberServiceServer is the server API for SubscriberService service.
+// All implementations must embed UnimplementedSubscriberServiceServer
+// for forward compatibility.
+//
+// Friend service definition
+type SubscriberServiceServer interface {
+	// Send a friend request
+	MakeFriendRequest(context.Context, *FriendRequest) (*emptypb.Empty, error)
+	// Accept a friend request
+	AcceptFriend(context.Context, *FriendAcceptRequest) (*emptypb.Empty, error)
+	// Reject a friend request
+	RejectFriend(context.Context, *RejectFriendRequest) (*emptypb.Empty, error)
+	// Remove a friend
+	RemoveFriend(context.Context, *RemoveFriendRequest) (*emptypb.Empty, error)
+	// Get list of friends
+	ListFriends(context.Context, *ListFriendsRequest) (*ListFriendsResponse, error)
+	mustEmbedUnimplementedSubscriberServiceServer()
+}
+
+// UnimplementedSubscriberServiceServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedFriendRequestServiceServer struct{}
+type UnimplementedSubscriberServiceServer struct{}
 
-func (UnimplementedFriendRequestServiceServer) MakeFriendRequest(context.Context, *FriendRequest) (*emptypb.Empty, error) {
+func (UnimplementedSubscriberServiceServer) MakeFriendRequest(context.Context, *FriendRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method MakeFriendRequest not implemented")
 }
-func (UnimplementedFriendRequestServiceServer) mustEmbedUnimplementedFriendRequestServiceServer() {}
-func (UnimplementedFriendRequestServiceServer) testEmbeddedByValue()                              {}
+func (UnimplementedSubscriberServiceServer) AcceptFriend(context.Context, *FriendAcceptRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AcceptFriend not implemented")
+}
+func (UnimplementedSubscriberServiceServer) RejectFriend(context.Context, *RejectFriendRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RejectFriend not implemented")
+}
+func (UnimplementedSubscriberServiceServer) RemoveFriend(context.Context, *RemoveFriendRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RemoveFriend not implemented")
+}
+func (UnimplementedSubscriberServiceServer) ListFriends(context.Context, *ListFriendsRequest) (*ListFriendsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListFriends not implemented")
+}
+func (UnimplementedSubscriberServiceServer) mustEmbedUnimplementedSubscriberServiceServer() {}
+func (UnimplementedSubscriberServiceServer) testEmbeddedByValue()                           {}
 
-// UnsafeFriendRequestServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to FriendRequestServiceServer will
+// UnsafeSubscriberServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to SubscriberServiceServer will
 // result in compilation errors.
-type UnsafeFriendRequestServiceServer interface {
-	mustEmbedUnimplementedFriendRequestServiceServer()
+type UnsafeSubscriberServiceServer interface {
+	mustEmbedUnimplementedSubscriberServiceServer()
 }
 
-func RegisterFriendRequestServiceServer(s grpc.ServiceRegistrar, srv FriendRequestServiceServer) {
-	// If the following call pancis, it indicates UnimplementedFriendRequestServiceServer was
+func RegisterSubscriberServiceServer(s grpc.ServiceRegistrar, srv SubscriberServiceServer) {
+	// If the following call pancis, it indicates UnimplementedSubscriberServiceServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&FriendRequestService_ServiceDesc, srv)
+	s.RegisterService(&SubscriberService_ServiceDesc, srv)
 }
 
-func _FriendRequestService_MakeFriendRequest_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _SubscriberService_MakeFriendRequest_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(FriendRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(FriendRequestServiceServer).MakeFriendRequest(ctx, in)
+		return srv.(SubscriberServiceServer).MakeFriendRequest(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: FriendRequestService_MakeFriendRequest_FullMethodName,
+		FullMethod: SubscriberService_MakeFriendRequest_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FriendRequestServiceServer).MakeFriendRequest(ctx, req.(*FriendRequest))
+		return srv.(SubscriberServiceServer).MakeFriendRequest(ctx, req.(*FriendRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// FriendRequestService_ServiceDesc is the grpc.ServiceDesc for FriendRequestService service.
-// It's only intended for direct use with grpc.RegisterService,
-// and not to be introspected or modified (even as a copy)
-var FriendRequestService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "github.com.igortoigildin.go.contacts.subscriber.FriendRequestService",
-	HandlerType: (*FriendRequestServiceServer)(nil),
-	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "MakeFriendRequest",
-			Handler:    _FriendRequestService_MakeFriendRequest_Handler,
-		},
-	},
-	Streams:  []grpc.StreamDesc{},
-	Metadata: "proto/service.proto",
-}
-
-const (
-	FriendAcceptService_AcceptFriend_FullMethodName = "/github.com.igortoigildin.go.contacts.subscriber.FriendAcceptService/AcceptFriend"
-)
-
-// FriendAcceptServiceClient is the client API for FriendAcceptService service.
-//
-// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-//
-// Принятие заявки
-type FriendAcceptServiceClient interface {
-	AcceptFriend(ctx context.Context, in *FriendAcceptRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-}
-
-type friendAcceptServiceClient struct {
-	cc grpc.ClientConnInterface
-}
-
-func NewFriendAcceptServiceClient(cc grpc.ClientConnInterface) FriendAcceptServiceClient {
-	return &friendAcceptServiceClient{cc}
-}
-
-func (c *friendAcceptServiceClient) AcceptFriend(ctx context.Context, in *FriendAcceptRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, FriendAcceptService_AcceptFriend_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-// FriendAcceptServiceServer is the server API for FriendAcceptService service.
-// All implementations must embed UnimplementedFriendAcceptServiceServer
-// for forward compatibility.
-//
-// Принятие заявки
-type FriendAcceptServiceServer interface {
-	AcceptFriend(context.Context, *FriendAcceptRequest) (*emptypb.Empty, error)
-	mustEmbedUnimplementedFriendAcceptServiceServer()
-}
-
-// UnimplementedFriendAcceptServiceServer must be embedded to have
-// forward compatible implementations.
-//
-// NOTE: this should be embedded by value instead of pointer to avoid a nil
-// pointer dereference when methods are called.
-type UnimplementedFriendAcceptServiceServer struct{}
-
-func (UnimplementedFriendAcceptServiceServer) AcceptFriend(context.Context, *FriendAcceptRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AcceptFriend not implemented")
-}
-func (UnimplementedFriendAcceptServiceServer) mustEmbedUnimplementedFriendAcceptServiceServer() {}
-func (UnimplementedFriendAcceptServiceServer) testEmbeddedByValue()                             {}
-
-// UnsafeFriendAcceptServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to FriendAcceptServiceServer will
-// result in compilation errors.
-type UnsafeFriendAcceptServiceServer interface {
-	mustEmbedUnimplementedFriendAcceptServiceServer()
-}
-
-func RegisterFriendAcceptServiceServer(s grpc.ServiceRegistrar, srv FriendAcceptServiceServer) {
-	// If the following call pancis, it indicates UnimplementedFriendAcceptServiceServer was
-	// embedded by pointer and is nil.  This will cause panics if an
-	// unimplemented method is ever invoked, so we test this at initialization
-	// time to prevent it from happening at runtime later due to I/O.
-	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
-		t.testEmbeddedByValue()
-	}
-	s.RegisterService(&FriendAcceptService_ServiceDesc, srv)
-}
-
-func _FriendAcceptService_AcceptFriend_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _SubscriberService_AcceptFriend_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(FriendAcceptRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(FriendAcceptServiceServer).AcceptFriend(ctx, in)
+		return srv.(SubscriberServiceServer).AcceptFriend(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: FriendAcceptService_AcceptFriend_FullMethodName,
+		FullMethod: SubscriberService_AcceptFriend_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FriendAcceptServiceServer).AcceptFriend(ctx, req.(*FriendAcceptRequest))
+		return srv.(SubscriberServiceServer).AcceptFriend(ctx, req.(*FriendAcceptRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// FriendAcceptService_ServiceDesc is the grpc.ServiceDesc for FriendAcceptService service.
-// It's only intended for direct use with grpc.RegisterService,
-// and not to be introspected or modified (even as a copy)
-var FriendAcceptService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "github.com.igortoigildin.go.contacts.subscriber.FriendAcceptService",
-	HandlerType: (*FriendAcceptServiceServer)(nil),
-	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "AcceptFriend",
-			Handler:    _FriendAcceptService_AcceptFriend_Handler,
-		},
-	},
-	Streams:  []grpc.StreamDesc{},
-	Metadata: "proto/service.proto",
-}
-
-const (
-	FriendRejectService_RejectFriend_FullMethodName = "/github.com.igortoigildin.go.contacts.subscriber.FriendRejectService/RejectFriend"
-)
-
-// FriendRejectServiceClient is the client API for FriendRejectService service.
-//
-// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-//
-// Отклонение заявки
-type FriendRejectServiceClient interface {
-	RejectFriend(ctx context.Context, in *RejectFriendRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-}
-
-type friendRejectServiceClient struct {
-	cc grpc.ClientConnInterface
-}
-
-func NewFriendRejectServiceClient(cc grpc.ClientConnInterface) FriendRejectServiceClient {
-	return &friendRejectServiceClient{cc}
-}
-
-func (c *friendRejectServiceClient) RejectFriend(ctx context.Context, in *RejectFriendRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, FriendRejectService_RejectFriend_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-// FriendRejectServiceServer is the server API for FriendRejectService service.
-// All implementations must embed UnimplementedFriendRejectServiceServer
-// for forward compatibility.
-//
-// Отклонение заявки
-type FriendRejectServiceServer interface {
-	RejectFriend(context.Context, *RejectFriendRequest) (*emptypb.Empty, error)
-	mustEmbedUnimplementedFriendRejectServiceServer()
-}
-
-// UnimplementedFriendRejectServiceServer must be embedded to have
-// forward compatible implementations.
-//
-// NOTE: this should be embedded by value instead of pointer to avoid a nil
-// pointer dereference when methods are called.
-type UnimplementedFriendRejectServiceServer struct{}
-
-func (UnimplementedFriendRejectServiceServer) RejectFriend(context.Context, *RejectFriendRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method RejectFriend not implemented")
-}
-func (UnimplementedFriendRejectServiceServer) mustEmbedUnimplementedFriendRejectServiceServer() {}
-func (UnimplementedFriendRejectServiceServer) testEmbeddedByValue()                             {}
-
-// UnsafeFriendRejectServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to FriendRejectServiceServer will
-// result in compilation errors.
-type UnsafeFriendRejectServiceServer interface {
-	mustEmbedUnimplementedFriendRejectServiceServer()
-}
-
-func RegisterFriendRejectServiceServer(s grpc.ServiceRegistrar, srv FriendRejectServiceServer) {
-	// If the following call pancis, it indicates UnimplementedFriendRejectServiceServer was
-	// embedded by pointer and is nil.  This will cause panics if an
-	// unimplemented method is ever invoked, so we test this at initialization
-	// time to prevent it from happening at runtime later due to I/O.
-	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
-		t.testEmbeddedByValue()
-	}
-	s.RegisterService(&FriendRejectService_ServiceDesc, srv)
-}
-
-func _FriendRejectService_RejectFriend_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _SubscriberService_RejectFriend_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(RejectFriendRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(FriendRejectServiceServer).RejectFriend(ctx, in)
+		return srv.(SubscriberServiceServer).RejectFriend(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: FriendRejectService_RejectFriend_FullMethodName,
+		FullMethod: SubscriberService_RejectFriend_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FriendRejectServiceServer).RejectFriend(ctx, req.(*RejectFriendRequest))
+		return srv.(SubscriberServiceServer).RejectFriend(ctx, req.(*RejectFriendRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// FriendRejectService_ServiceDesc is the grpc.ServiceDesc for FriendRejectService service.
-// It's only intended for direct use with grpc.RegisterService,
-// and not to be introspected or modified (even as a copy)
-var FriendRejectService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "github.com.igortoigildin.go.contacts.subscriber.FriendRejectService",
-	HandlerType: (*FriendRejectServiceServer)(nil),
-	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "RejectFriend",
-			Handler:    _FriendRejectService_RejectFriend_Handler,
-		},
-	},
-	Streams:  []grpc.StreamDesc{},
-	Metadata: "proto/service.proto",
-}
-
-const (
-	FriendRemoveService_RemoveFriend_FullMethodName = "/github.com.igortoigildin.go.contacts.subscriber.FriendRemoveService/RemoveFriend"
-)
-
-// FriendRemoveServiceClient is the client API for FriendRemoveService service.
-//
-// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-//
-// Удаление друга
-type FriendRemoveServiceClient interface {
-	RemoveFriend(ctx context.Context, in *RemoveFriendRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-}
-
-type friendRemoveServiceClient struct {
-	cc grpc.ClientConnInterface
-}
-
-func NewFriendRemoveServiceClient(cc grpc.ClientConnInterface) FriendRemoveServiceClient {
-	return &friendRemoveServiceClient{cc}
-}
-
-func (c *friendRemoveServiceClient) RemoveFriend(ctx context.Context, in *RemoveFriendRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, FriendRemoveService_RemoveFriend_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-// FriendRemoveServiceServer is the server API for FriendRemoveService service.
-// All implementations must embed UnimplementedFriendRemoveServiceServer
-// for forward compatibility.
-//
-// Удаление друга
-type FriendRemoveServiceServer interface {
-	RemoveFriend(context.Context, *RemoveFriendRequest) (*emptypb.Empty, error)
-	mustEmbedUnimplementedFriendRemoveServiceServer()
-}
-
-// UnimplementedFriendRemoveServiceServer must be embedded to have
-// forward compatible implementations.
-//
-// NOTE: this should be embedded by value instead of pointer to avoid a nil
-// pointer dereference when methods are called.
-type UnimplementedFriendRemoveServiceServer struct{}
-
-func (UnimplementedFriendRemoveServiceServer) RemoveFriend(context.Context, *RemoveFriendRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method RemoveFriend not implemented")
-}
-func (UnimplementedFriendRemoveServiceServer) mustEmbedUnimplementedFriendRemoveServiceServer() {}
-func (UnimplementedFriendRemoveServiceServer) testEmbeddedByValue()                             {}
-
-// UnsafeFriendRemoveServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to FriendRemoveServiceServer will
-// result in compilation errors.
-type UnsafeFriendRemoveServiceServer interface {
-	mustEmbedUnimplementedFriendRemoveServiceServer()
-}
-
-func RegisterFriendRemoveServiceServer(s grpc.ServiceRegistrar, srv FriendRemoveServiceServer) {
-	// If the following call pancis, it indicates UnimplementedFriendRemoveServiceServer was
-	// embedded by pointer and is nil.  This will cause panics if an
-	// unimplemented method is ever invoked, so we test this at initialization
-	// time to prevent it from happening at runtime later due to I/O.
-	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
-		t.testEmbeddedByValue()
-	}
-	s.RegisterService(&FriendRemoveService_ServiceDesc, srv)
-}
-
-func _FriendRemoveService_RemoveFriend_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _SubscriberService_RemoveFriend_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(RemoveFriendRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(FriendRemoveServiceServer).RemoveFriend(ctx, in)
+		return srv.(SubscriberServiceServer).RemoveFriend(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: FriendRemoveService_RemoveFriend_FullMethodName,
+		FullMethod: SubscriberService_RemoveFriend_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FriendRemoveServiceServer).RemoveFriend(ctx, req.(*RemoveFriendRequest))
+		return srv.(SubscriberServiceServer).RemoveFriend(ctx, req.(*RemoveFriendRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// FriendRemoveService_ServiceDesc is the grpc.ServiceDesc for FriendRemoveService service.
-// It's only intended for direct use with grpc.RegisterService,
-// and not to be introspected or modified (even as a copy)
-var FriendRemoveService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "github.com.igortoigildin.go.contacts.subscriber.FriendRemoveService",
-	HandlerType: (*FriendRemoveServiceServer)(nil),
-	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "RemoveFriend",
-			Handler:    _FriendRemoveService_RemoveFriend_Handler,
-		},
-	},
-	Streams:  []grpc.StreamDesc{},
-	Metadata: "proto/service.proto",
-}
-
-const (
-	FriendListService_ListFriends_FullMethodName = "/github.com.igortoigildin.go.contacts.subscriber.FriendListService/ListFriends"
-)
-
-// FriendListServiceClient is the client API for FriendListService service.
-//
-// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-//
-// Получение списка друзей
-type FriendListServiceClient interface {
-	ListFriends(ctx context.Context, in *ListFriendsRequest, opts ...grpc.CallOption) (*ListFriendsResponse, error)
-}
-
-type friendListServiceClient struct {
-	cc grpc.ClientConnInterface
-}
-
-func NewFriendListServiceClient(cc grpc.ClientConnInterface) FriendListServiceClient {
-	return &friendListServiceClient{cc}
-}
-
-func (c *friendListServiceClient) ListFriends(ctx context.Context, in *ListFriendsRequest, opts ...grpc.CallOption) (*ListFriendsResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ListFriendsResponse)
-	err := c.cc.Invoke(ctx, FriendListService_ListFriends_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-// FriendListServiceServer is the server API for FriendListService service.
-// All implementations must embed UnimplementedFriendListServiceServer
-// for forward compatibility.
-//
-// Получение списка друзей
-type FriendListServiceServer interface {
-	ListFriends(context.Context, *ListFriendsRequest) (*ListFriendsResponse, error)
-	mustEmbedUnimplementedFriendListServiceServer()
-}
-
-// UnimplementedFriendListServiceServer must be embedded to have
-// forward compatible implementations.
-//
-// NOTE: this should be embedded by value instead of pointer to avoid a nil
-// pointer dereference when methods are called.
-type UnimplementedFriendListServiceServer struct{}
-
-func (UnimplementedFriendListServiceServer) ListFriends(context.Context, *ListFriendsRequest) (*ListFriendsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListFriends not implemented")
-}
-func (UnimplementedFriendListServiceServer) mustEmbedUnimplementedFriendListServiceServer() {}
-func (UnimplementedFriendListServiceServer) testEmbeddedByValue()                           {}
-
-// UnsafeFriendListServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to FriendListServiceServer will
-// result in compilation errors.
-type UnsafeFriendListServiceServer interface {
-	mustEmbedUnimplementedFriendListServiceServer()
-}
-
-func RegisterFriendListServiceServer(s grpc.ServiceRegistrar, srv FriendListServiceServer) {
-	// If the following call pancis, it indicates UnimplementedFriendListServiceServer was
-	// embedded by pointer and is nil.  This will cause panics if an
-	// unimplemented method is ever invoked, so we test this at initialization
-	// time to prevent it from happening at runtime later due to I/O.
-	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
-		t.testEmbeddedByValue()
-	}
-	s.RegisterService(&FriendListService_ServiceDesc, srv)
-}
-
-func _FriendListService_ListFriends_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _SubscriberService_ListFriends_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListFriendsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(FriendListServiceServer).ListFriends(ctx, in)
+		return srv.(SubscriberServiceServer).ListFriends(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: FriendListService_ListFriends_FullMethodName,
+		FullMethod: SubscriberService_ListFriends_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FriendListServiceServer).ListFriends(ctx, req.(*ListFriendsRequest))
+		return srv.(SubscriberServiceServer).ListFriends(ctx, req.(*ListFriendsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// FriendListService_ServiceDesc is the grpc.ServiceDesc for FriendListService service.
+// SubscriberService_ServiceDesc is the grpc.ServiceDesc for SubscriberService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var FriendListService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "github.com.igortoigildin.go.contacts.subscriber.FriendListService",
-	HandlerType: (*FriendListServiceServer)(nil),
+var SubscriberService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "github.com.igortoigildin.go.contacts.subscriber.SubscriberService",
+	HandlerType: (*SubscriberServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
+			MethodName: "MakeFriendRequest",
+			Handler:    _SubscriberService_MakeFriendRequest_Handler,
+		},
+		{
+			MethodName: "AcceptFriend",
+			Handler:    _SubscriberService_AcceptFriend_Handler,
+		},
+		{
+			MethodName: "RejectFriend",
+			Handler:    _SubscriberService_RejectFriend_Handler,
+		},
+		{
+			MethodName: "RemoveFriend",
+			Handler:    _SubscriberService_RemoveFriend_Handler,
+		},
+		{
 			MethodName: "ListFriends",
-			Handler:    _FriendListService_ListFriends_Handler,
+			Handler:    _SubscriberService_ListFriends_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
