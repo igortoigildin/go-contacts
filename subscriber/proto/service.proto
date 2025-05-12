@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package github.com.igortoigildin.go.contacts.subscriber;
+
+import "google/api/annotations.proto";
+import "proto/messages.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+import "google/protobuf/empty.proto";
+
+option go_package = "github.com/igortoigildin/go-contacts/subscriber/pkg/proto;proto";
+
+
+// Отправка заявки в друзья
+service FriendRequestService {
+  rpc MakeFriendRequest(FriendRequest) returns (google.protobuf.Empty);
+}
+
+// Принятие заявки
+service FriendAcceptService {
+  rpc AcceptFriend(FriendAcceptRequest) returns (google.protobuf.Empty);
+}
+
+// Отклонение заявки
+service FriendRejectService {
+  rpc RejectFriend(RejectFriendRequest) returns (google.protobuf.Empty);
+}
+
+// Удаление друга
+service FriendRemoveService {
+  rpc RemoveFriend(RemoveFriendRequest) returns (google.protobuf.Empty);
+}
+
+// Получение списка друзей
+service FriendListService {
+  rpc ListFriends(ListFriendsRequest) returns (ListFriendsResponse);
+}
+

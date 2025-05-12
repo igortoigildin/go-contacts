@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package github.com.igortoigildin.go.contacts.subscriber;
+
+import "google/api/field_behavior.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+
+option go_package = "github.com/igortoigildin/go-contacts/subscriber/pkg/proto;proto";
+
+
+// Сообщения запроса и ответа
+message FriendRequest {
+  string username = 1;
+  string target_username = 2;
+}
+
+message FriendAcceptRequest {
+  string username = 1;
+  string target_username = 2;
+}
+
+message RemoveFriendRequest {
+  string username = 1;
+  string friend_username = 2;
+}
+
+message RejectFriendRequest {
+  string username = 1;
+  string target_username = 2;
+}
+
+message ListFriendsRequest {
+  string username = 1;
+}
+
+message ListFriendsResponse {
+  repeated string friends = 1;
+}
