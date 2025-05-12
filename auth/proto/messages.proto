@@ -44,11 +44,7 @@ message RegisterResponse {
     }
   };
   string username = 1 [
-    (google.api.field_behavior) = REQUIRED,
-    (buf.validate.field).string = {
-      min_len: 1,
-      max_len: 100
-    }
+    (google.api.field_behavior) = REQUIRED
   ];
 }
 
@@ -91,11 +87,7 @@ message LoginResponse {
     }
   };
   string token = 1 [
-    (google.api.field_behavior) = REQUIRED,
-    (buf.validate.field).string = {
-      min_len: 1,
-      max_len: 100
-    }
+    (google.api.field_behavior) = REQUIRED
   ];
 }
 
@@ -162,11 +154,7 @@ message SuccessResponse {
     }
   };
   string message = 1 [
-    (google.api.field_behavior) = REQUIRED,
-    (buf.validate.field).string = {
-      min_len: 1,
-      max_len: 100
-    }
+    (google.api.field_behavior) = REQUIRED
   ];
 }
 

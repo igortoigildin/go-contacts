@@ -11,7 +11,4 @@ func (c *Client) CreateUser(ctx context.Context, user *models.User) error {
 	return nil
 }
 
-func (c *Client) GetUserByUsername(ctx context.Context, username string) (*models.User, error) {
-	//TODO: implement
-	return nil, nil
-}
+
