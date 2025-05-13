@@ -3,7 +3,9 @@ module github.com/igortoigildin/go-contacts/subscriber
 go 1.24.2
 
 require (
+	github.com/georgysavva/scany/v2 v2.1.4
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.26.3
+	github.com/jackc/pgx/v5 v5.6.0
 	golang.org/x/sync v0.12.0
 	google.golang.org/genproto/googleapis/api v0.0.0-20250505200425-f936aa4a68b2
 	google.golang.org/grpc v1.72.0
@@ -11,6 +13,12 @@ require (
 )
 
 require (
+	github.com/google/uuid v1.6.0 // indirect
+	github.com/jackc/pgpassfile v1.0.0 // indirect
+	github.com/jackc/pgservicefile v0.0.0-20221227161230-091c0ba34f0a // indirect
+	github.com/jackc/puddle/v2 v2.2.1 // indirect
+	github.com/vgarvardt/pgx-google-uuid/v5 v5.6.0 // indirect
+	golang.org/x/crypto v0.36.0 // indirect
 	golang.org/x/net v0.37.0 // indirect
 	golang.org/x/sys v0.31.0 // indirect
 	golang.org/x/text v0.23.0 // indirect
