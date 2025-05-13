@@ -23,7 +23,7 @@ type PgxCommonAPI interface {
 
 // TransactionAPI - ...
 type TransactionAPI interface {
-	// 
+	//
 	BeginTx(ctx context.Context, txOptions pgx.TxOptions) (*Transaction, error)
 	//
 	Begin(ctx context.Context) (*Transaction, error)
