@@ -6,6 +6,7 @@ import (
 
 	"github.com/Masterminds/squirrel"
 	request_models "github.com/igortoigildin/go-contacts/subscriber/internal/app/usecases/models"
+	//request_models "github.com/igortoigildin/go-contacts/subscriber/internal/app/usecases/models"
 )
 
 func (r *Repository) AcceptRequest(ctx context.Context, filter *request_models.FriendRequestUpdateFilter) error {

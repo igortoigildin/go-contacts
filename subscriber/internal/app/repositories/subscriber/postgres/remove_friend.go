@@ -9,7 +9,7 @@ import (
 	usecasemodels "github.com/igortoigildin/go-contacts/subscriber/internal/app/usecases/models"
 )
 
-func (r *Repository) RemoveFriendRequest(ctx context.Context, filters *usecasemodels.FriendRequestSearchFilter) error {
+func (r *Repository) RemoveFriendRequest(ctx context.Context, filters *usecasemodels.FriendRequestDeleteFilter) error {
 
 	qb := squirrel.Delete(tableFriendRequests).
 		PlaceholderFormat(squirrel.Dollar)
@@ -24,7 +24,7 @@ func (r *Repository) RemoveFriendRequest(ctx context.Context, filters *usecasemo
 	return nil
 }
 
-func applyRequestsDeleteFilter(qb squirrel.DeleteBuilder, filter *request_models.FriendRequestSearchFilter) squirrel.DeleteBuilder {
+func applyRequestsDeleteFilter(qb squirrel.DeleteBuilder, filter *request_models.FriendRequestDeleteFilter) squirrel.DeleteBuilder {
 	if filter == nil {
 		return qb
 	}

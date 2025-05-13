@@ -1,0 +1,5 @@
+packages:
+  - name: ./internal/app/usecases
+    output: ./internal/app/usecases/mocks
+    interfaces:
+      - SubscriberRepository
