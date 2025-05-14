@@ -5,25 +5,18 @@ import (
 	"fmt"
 
 	"github.com/igortoigildin/go-contacts/subscriber/internal/app/models"
+	usecase_models "github.com/igortoigildin/go-contacts/subscriber/internal/app/usecases/models"
 )
 
 func (u *usecase) RejectFriendRequest(ctx context.Context, req *FriendRejectDTO) error {
-	filter := NewFriendUpdateFilter()
+	filter := usecase_models.NewFriendUpdateFilter()
 	filter.ReceiverIDs = append(filter.ReceiverIDs, models.ReceiverID(req.TargetUsername))
 	filter.SenderIDs = append(filter.SenderIDs, models.SenderID(req.Username))
 
-	// Save reject request to DB
-	err := u.TxManager.RunReadCommitted(ctx,
-
-		func(txCtx context.Context) error {
-
-			if err := u.SubscriberRepository.RejectRequest(txCtx, filter); err != nil {
-				return fmt.Errorf("%w", err)
-			}
-
-			return nil
-		},
-	)
+	err := u.SubscriberRepository.RejectRequest(ctx, filter)
+	if err != nil {
+		return fmt.Errorf("%w", err)
+	}
 
 	return err
 }

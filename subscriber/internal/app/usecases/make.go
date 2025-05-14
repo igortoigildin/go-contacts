@@ -13,18 +13,12 @@ func (u *usecase) MakeFriendRequest(ctx context.Context, req *FriendRequestDTO) 
 	friendRequest.ReceiverID = models.ReceiverID(req.TargetUsername)
 	friendRequest.SenderID = models.SenderID(req.Username)
 
-	// Save request to DB
-	err := u.TxManager.RunReadCommitted(ctx,
+	// // Save request to DB
 
-		func(txCtx context.Context) error {
-
-			if err := u.SubscriberRepository.MakeFriendRequest(txCtx, friendRequest); err != nil {
-				return fmt.Errorf("%w", err)
-			}
-
-			return nil
-		},
-	)
+	err := u.SubscriberRepository.MakeFriendRequest(ctx, friendRequest)
+	if err != nil {
+		return fmt.Errorf("%w", err)
+	}
 
 	return err
 }

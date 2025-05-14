@@ -5,10 +5,10 @@ import (
 	"fmt"
 
 	"github.com/Masterminds/squirrel"
-	request_models "github.com/igortoigildin/go-contacts/subscriber/internal/app/usecases/models"
+	subscriber_models "github.com/igortoigildin/go-contacts/subscriber/internal/app/usecases/models"
 )
 
-func (r *Repository) RejectRequest(ctx context.Context, filter *request_models.FriendRequestUpdateFilter) error {
+func (r *Repository) RejectRequest(ctx context.Context, filter *subscriber_models.FriendRequestUpdateFilter) error {
 	qb := squirrel.Update(tableFriendRequests).Set(columnStatus, "rejected").
 		Set(columnCreatedAt, squirrel.Expr("CURRENT_TIMESTAMP")).
 		PlaceholderFormat(squirrel.Dollar)

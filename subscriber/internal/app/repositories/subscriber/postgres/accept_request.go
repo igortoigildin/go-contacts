@@ -5,11 +5,10 @@ import (
 	"fmt"
 
 	"github.com/Masterminds/squirrel"
-	request_models "github.com/igortoigildin/go-contacts/subscriber/internal/app/usecases/models"
-	//request_models "github.com/igortoigildin/go-contacts/subscriber/internal/app/usecases/models"
+	subscriber_models "github.com/igortoigildin/go-contacts/subscriber/internal/app/usecases/models"
 )
 
-func (r *Repository) AcceptRequest(ctx context.Context, filter *request_models.FriendRequestUpdateFilter) error {
+func (r *Repository) AcceptRequest(ctx context.Context, filter *subscriber_models.FriendRequestUpdateFilter) error {
 	qb := squirrel.Update(tableFriendRequests).Set(columnStatus, "accepted").
 		Set(columnCreatedAt, squirrel.Expr("CURRENT_TIMESTAMP")).
 		PlaceholderFormat(squirrel.Dollar)
@@ -24,7 +23,7 @@ func (r *Repository) AcceptRequest(ctx context.Context, filter *request_models.F
 	return nil
 }
 
-func applyRequestsUpdateFilter(qb squirrel.UpdateBuilder, filter *request_models.FriendRequestUpdateFilter) squirrel.UpdateBuilder {
+func applyRequestsUpdateFilter(qb squirrel.UpdateBuilder, filter *subscriber_models.FriendRequestUpdateFilter) squirrel.UpdateBuilder {
 	if filter == nil {
 		return qb
 	}

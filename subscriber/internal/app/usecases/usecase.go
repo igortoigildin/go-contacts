@@ -4,6 +4,8 @@ import (
 	"context"
 
 	"github.com/igortoigildin/go-contacts/subscriber/internal/app/models"
+
+	subscriber_models "github.com/igortoigildin/go-contacts/subscriber/internal/app/usecases/models"
 )
 
 type Usecase interface {
@@ -26,16 +28,16 @@ type (
 )
 
 type SubscriberRepository interface {
-	AcceptRequest(ctx context.Context, filter *FriendRequestUpdateFilter) error
+	AcceptRequest(ctx context.Context, filter *subscriber_models.FriendRequestUpdateFilter) error
 	MakeFriendRequest(ctx context.Context, reqfriendRequest *models.FriendRequest) error
-	RejectRequest(ctx context.Context, filter *FriendRequestUpdateFilter) error
-	RemoveFriendRequest(ctx context.Context, filters *FriendRequestDeleteFilter) error
+	RejectRequest(ctx context.Context, filter *subscriber_models.FriendRequestUpdateFilter) error
+	RemoveFriendRequest(ctx context.Context, filters *subscriber_models.FriendRequestDeleteFilter) error
 }
 
 type Deps struct {
 	// Adapters
 	SubscriberRepository
-	TxManager TxManager
+	//TxManager TxManager
 }
 
 var (
@@ -44,45 +46,4 @@ var (
 
 type usecase struct {
 	Deps
-}
-
-
-
-type (
-	FriendRequestSearchFilter struct {
-		SenderIDs   []models.SenderID
-		ReceiverIDs []models.ReceiverID
-		Statuses    string
-	}
-	FriendRequestInsertFilter struct {
-		SenderIDs   []models.SenderID
-		ReceiverIDs []models.ReceiverID
-		Statuses    string
-	}
-	FriendRequestUpdateFilter struct {
-		SenderIDs   []models.SenderID
-		ReceiverIDs []models.ReceiverID
-		Statuses    string
-	}
-	FriendRequestDeleteFilter struct {
-		SenderIDs   []models.SenderID
-		ReceiverIDs []models.ReceiverID
-		Statuses    string
-	}
-)
-
-func NewFriendRequestSearchFilter() *FriendRequestSearchFilter {
-	return new(FriendRequestSearchFilter)
-}
-
-func NewFriendInsertFilter() *FriendRequestInsertFilter {
-	return new(FriendRequestInsertFilter)
-}
-
-func NewFriendUpdateFilter() *FriendRequestUpdateFilter {
-	return new(FriendRequestUpdateFilter)
-}
-
-func NewFriendDeleteFilter() *FriendRequestDeleteFilter {
-	return new(FriendRequestDeleteFilter)
 }

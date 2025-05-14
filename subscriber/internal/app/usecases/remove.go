@@ -5,25 +5,21 @@ import (
 	"fmt"
 
 	"github.com/igortoigildin/go-contacts/subscriber/internal/app/models"
+
+	usecase_models "github.com/igortoigildin/go-contacts/subscriber/internal/app/usecases/models"
 )
 
 func (u *usecase) RemoveFriend(ctx context.Context, req *RemoveFriendDTO) error {
-	filter := NewFriendDeleteFilter()
+	filter := usecase_models.NewFriendDeleteFilter()
 	filter.ReceiverIDs = append(filter.ReceiverIDs, models.ReceiverID(req.FriendUsername))
 	filter.SenderIDs = append(filter.SenderIDs, models.SenderID(req.Username))
 
-	// Save update request to DB
-	err := u.TxManager.RunReadCommitted(ctx,
+	err := u.SubscriberRepository.RemoveFriendRequest(ctx, filter)
+	if err != nil {
+		return fmt.Errorf("%w", err)
+	}
 
-		func(txCtx context.Context) error {
-
-			if err := u.SubscriberRepository.RemoveFriendRequest(txCtx, filter); err != nil {
-				return fmt.Errorf("%w", err)
-			}
-
-			return nil
-		},
-	)
+	return nil
 
 	return err
 }
