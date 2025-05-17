@@ -9,10 +9,11 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 
+	dto "github.com/igortoigildin/go-contacts/subscriber/internal/app/usecases"
 	usecase "github.com/igortoigildin/go-contacts/subscriber/internal/app/usecases"
 )
 
-func Test_usecase_MakeFriendRequest(t *testing.T) {
+func Test_usecase_RemoveFriendRequest(t *testing.T) {
 	t.Parallel()
 	var (
 		ctx = context.Background()
@@ -20,7 +21,7 @@ func Test_usecase_MakeFriendRequest(t *testing.T) {
 
 	type args struct {
 		ctx         context.Context
-		requestInfo *usecase.FriendRequestDTO
+		requestInfo *dto.RemoveFriendDTO
 	}
 
 	tests := []struct {
@@ -33,15 +34,15 @@ func Test_usecase_MakeFriendRequest(t *testing.T) {
 			name: "Test 1. Positive",
 			args: args{
 				ctx: ctx, // dummy
-				requestInfo: &usecase.FriendRequestDTO{
+				requestInfo: &dto.RemoveFriendDTO{
 					Username:       "Alice",
-					TargetUsername: "Bob",
+					FriendUsername: "Bob",
 				},
 			},
 			mock: func(t *testing.T) usecase.Deps {
 				repoMock := mocks.NewSubscriberRepository(t)
 
-				repoMock.On("MakeFriendRequest", ctx, mock.Anything).Return(nil)
+				repoMock.On("RemoveFriendRequest", ctx, mock.Anything).Return(nil)
 				return usecase.Deps{
 					SubscriberRepository: repoMock,
 				}
@@ -52,15 +53,15 @@ func Test_usecase_MakeFriendRequest(t *testing.T) {
 			name: "Test 2. Negative",
 			args: args{
 				ctx: ctx, // dummy
-				requestInfo: &usecase.FriendRequestDTO{
+				requestInfo: &dto.RemoveFriendDTO{
 					Username:       "Alice",
-					TargetUsername: "Bob",
+					FriendUsername: "Bob",
 				},
 			},
 			mock: func(t *testing.T) usecase.Deps {
 				repoMock := mocks.NewSubscriberRepository(t)
 
-				repoMock.On("MakeFriendRequest", ctx, mock.Anything).Return(errors.New("some error")).Once()
+				repoMock.On("RemoveFriendRequest", ctx, mock.Anything).Return(errors.New("some error")).Once()
 				return usecase.Deps{
 					SubscriberRepository: repoMock,
 				}
@@ -75,7 +76,8 @@ func Test_usecase_MakeFriendRequest(t *testing.T) {
 
 			uc := usecase.NewUsecase(tt.mock(t))
 
-			err := uc.MakeFriendRequest(tt.args.ctx, tt.args.requestInfo)
+			err := uc.RemoveFriend(ctx, tt.args.requestInfo)
+
 			tt.wantErr(t, err)
 		})
 	}

@@ -19,7 +19,5 @@ func (u *usecase) RemoveFriend(ctx context.Context, req *RemoveFriendDTO) error 
 		return fmt.Errorf("%w", err)
 	}
 
-	return nil
-
 	return err
 }
