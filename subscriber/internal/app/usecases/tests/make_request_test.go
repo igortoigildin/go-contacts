@@ -2,6 +2,7 @@ package subscriber_tests
 
 import (
 	"context"
+	"errors"
 	"testing"
 
 	mocks "github.com/igortoigildin/go-contacts/subscriber/internal/app/usecases/mocks"
@@ -40,12 +41,31 @@ func Test_usecase_MakeFriendRequest(t *testing.T) {
 			mock: func(t *testing.T) usecase.Deps {
 				repoMock := mocks.NewSubscriberRepository(t)
 
-				repoMock.On("MakeFriendRequest", ctx, mock.Anything).Return(nil).Maybe()
+				repoMock.On("MakeFriendRequest", ctx, mock.Anything).Return(nil)
 				return usecase.Deps{
 					SubscriberRepository: repoMock,
 				}
 			},
 			wantErr: assert.NoError,
+		},
+		{
+			name: "Test 2. Negative",
+			args: args{
+				ctx: ctx, // dummy
+				orderInfo: &usecase.FriendRequestDTO{
+					Username:       "Alice",
+					TargetUsername: "Bob",
+				},
+			},
+			mock: func(t *testing.T) usecase.Deps {
+				repoMock := mocks.NewSubscriberRepository(t)
+
+				repoMock.On("MakeFriendRequest", ctx, mock.Anything).Return(errors.New("some error")).Once()
+				return usecase.Deps{
+					SubscriberRepository: repoMock,
+				}
+			},
+			wantErr: assert.Error,
 		},
 	}
 

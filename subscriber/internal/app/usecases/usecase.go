@@ -35,9 +35,7 @@ type SubscriberRepository interface {
 }
 
 type Deps struct {
-	// Adapters
 	SubscriberRepository
-	//TxManager TxManager
 }
 
 var (
