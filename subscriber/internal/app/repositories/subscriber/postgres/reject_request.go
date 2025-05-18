@@ -1,0 +1,24 @@
+package subscriberrepository
+
+import (
+	"context"
+	"fmt"
+
+	"github.com/Masterminds/squirrel"
+	subscriber_models "github.com/igortoigildin/go-contacts/subscriber/internal/app/usecases/models"
+)
+
+func (r *Repository) RejectRequest(ctx context.Context, filter *subscriber_models.FriendRequestUpdateFilter) error {
+	qb := squirrel.Update(tableFriendRequests).Set(columnStatus, "rejected").
+		Set(columnCreatedAt, squirrel.Expr("CURRENT_TIMESTAMP")).
+		PlaceholderFormat(squirrel.Dollar)
+
+	qb = applyRequestsUpdateFilter(qb, filter)
+
+	conn := r.txManager.GetQueryEngine(ctx)
+	if _, err := conn.Execx(ctx, qb); err != nil {
+		return fmt.Errorf("postgres: %w", convertPGError(err))
+	}
+
+	return nil
+}

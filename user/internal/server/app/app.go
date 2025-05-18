@@ -13,6 +13,7 @@ import (
 	"github.com/igortoigildin/go-contacts/user/internal/server/config"
 	interceptor "github.com/igortoigildin/go-contacts/user/internal/server/interceptor"
 	desc "github.com/igortoigildin/go-contacts/user/pkg/api/users"
+	"golang.org/x/time/rate"
 
 	"github.com/rs/cors"
 	"google.golang.org/grpc"
@@ -99,9 +100,15 @@ func (a *App) initConfig(_ context.Context) error {
 }
 
 func (a *App) initGRPCServer(ctx context.Context) error {
+	// 10 rpc without bufer (burst = 1) - rate limiter
+	limiter := rate.NewLimiter(10, 1)
+
 	a.grpcServer = grpc.NewServer(
 		grpc.Creds(insecure.NewCredentials()),
-		grpc.UnaryInterceptor(interceptor.ValidateInterceptor),
+		grpc.ChainUnaryInterceptor(
+			interceptor.ValidateInterceptor,
+			interceptor.RateLimitInterceptor(limiter),
+		),
 	)
 
 	reflection.Register(a.grpcServer)
