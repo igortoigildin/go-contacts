@@ -87,14 +87,3 @@ func unaryInterceptorsToGrpcServerOptions(interceptors ...grpc.UnaryServerInterc
 	}
 	return opts
 }
-
-// Subscriber routes
-// e.POST("/api/v1/subscriber/request", subscriber.MakeFriendRequestHandler)
-// e.POST("/api/v1/subscriber/accept", subscriber.AcceptFriendHandler)
-// e.POST("/api/v1/subscriber/reject", subscriber.RejectFriendHandler)
-// e.DELETE("/api/v1/subscriber", subscriber.RemoveFriendHandler)
-// e.GET("/api/v1/subscriber/:id", subscriber.GetFriendsHandler)
-
-// e.GET("/health/ready", func(c echo.Context) error {
-// 	return c.JSON(http.StatusOK, map[string]string{"status": "ok"})
-// })

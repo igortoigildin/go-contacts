@@ -76,7 +76,7 @@ func Test_usecase_AcceptFriendRequest(t *testing.T) {
 
 			uc := usecase.NewUsecase(tt.mock(t))
 
-			err := uc.AcceptFriendRequest(ctx, tt.args.requestInfo)
+			_, err := uc.AcceptFriendRequest(ctx, tt.args.requestInfo)
 
 			tt.wantErr(t, err)
 		})

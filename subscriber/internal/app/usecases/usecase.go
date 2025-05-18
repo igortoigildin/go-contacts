@@ -4,15 +4,16 @@ import (
 	"context"
 
 	"github.com/igortoigildin/go-contacts/subscriber/internal/app/models"
+	"google.golang.org/protobuf/types/known/emptypb"
 
 	subscriber_models "github.com/igortoigildin/go-contacts/subscriber/internal/app/usecases/models"
 )
 
 type Usecase interface {
-	MakeFriendRequest(ctx context.Context, req *FriendRequestDTO) error
-	AcceptFriendRequest(ctx context.Context, req *FriendAcceptDTO) error
-	RejectFriendRequest(ctx context.Context, req *FriendRejectDTO) error
-	RemoveFriend(ctx context.Context, req *RemoveFriendDTO) error
+	MakeFriendRequest(ctx context.Context, req *FriendRequestDTO) (*emptypb.Empty, error)
+	AcceptFriendRequest(ctx context.Context, req *FriendAcceptDTO) (*emptypb.Empty, error)
+	RejectFriendRequest(ctx context.Context, req *FriendRejectDTO) (*emptypb.Empty, error)
+	RemoveFriend(ctx context.Context, req *RemoveFriendDTO) (*emptypb.Empty, error)
 }
 
 func NewUsecase(deps Deps) *usecase {

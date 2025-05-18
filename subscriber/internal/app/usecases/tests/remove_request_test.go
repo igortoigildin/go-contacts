@@ -76,7 +76,7 @@ func Test_usecase_RemoveFriendRequest(t *testing.T) {
 
 			uc := usecase.NewUsecase(tt.mock(t))
 
-			err := uc.RemoveFriend(ctx, tt.args.requestInfo)
+			_, err := uc.RemoveFriend(ctx, tt.args.requestInfo)
 
 			tt.wantErr(t, err)
 		})

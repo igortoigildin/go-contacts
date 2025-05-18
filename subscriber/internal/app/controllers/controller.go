@@ -1,17 +1,22 @@
 package controllers
 
-// type Controller struct {
-// 	pb.UnimplementedSubscriberServiceServer
+import (
+	"github.com/igortoigildin/go-contacts/subscriber/internal/app/usecases"
+	pb "github.com/igortoigildin/go-contacts/subscriber/pkg/proto"
+)
 
-// 	Deps
-// }
+type Controller struct {
+	pb.UnimplementedSubscriberServiceServer
 
-// func New(deps Deps) *Controller {
-// 	return &Controller{
-// 		Deps: deps,
-// 	}
-// }
+	Deps
+}
 
-// type Deps struct {
-// 	SubscriberUsecase usecases.Usecase
-// }
+func New(deps Deps) *Controller {
+	return &Controller{
+		Deps: deps,
+	}
+}
+
+type Deps struct {
+	SubscriberUsecase usecases.Usecase
+}
