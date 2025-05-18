@@ -10,8 +10,23 @@ import (
 	"google.golang.org/protobuf/encoding/protojson"
 )
 
+var (
+	retryPolicy = `{
+		"methodConfig": [{
+		  "name": [{"service": "grpc.examples.echo.Echo"}],
+		  "retryPolicy": {
+			  "MaxAttempts": 4,
+			  "InitialBackoff": ".01s",
+			  "MaxBackoff": ".01s",
+			  "BackoffMultiplier": 1.0,
+			  "RetryableStatusCodes": [ "UNAVAILABLE" ]
+		  }
+		}]}`
+)
+
 func main() {
-	conn, err := grpc.NewClient(":8082", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.NewClient(":8082", grpc.WithTransportCredentials(insecure.NewCredentials()),
+	grpc.WithDefaultServiceConfig(retryPolicy))
 	if err != nil {
 		log.Fatalf("failed to connect to server: %v", err)
 	}
@@ -66,7 +81,7 @@ func main() {
 		log.Printf("updated user: %v", string(user))
 	}
 
-	// SearchUser
+	// /SearchUser
 	{
 		resp, err := userClient.SearchUsers(context.Background(), &desc.SearchUsersRequest{
 			Query: "test",
