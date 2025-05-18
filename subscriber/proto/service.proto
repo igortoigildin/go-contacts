@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package github.com.igortoigildin.go.contacts.subscriber;
+
+import "google/api/annotations.proto";
+import "proto/messages.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+import "google/protobuf/empty.proto";
+
+option go_package = "github.com/igortoigildin/go-contacts/subscriber/pkg/proto;proto";
+
+// Friend service definition
+service SubscriberService {
+  // Send a friend request
+  rpc MakeFriendRequest(FriendRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/api/v1/subscriber/request"
+      body: "*"
+    };
+  }
+
+  // Accept a friend request
+  rpc AcceptFriend(FriendAcceptRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/api/v1/subscriber/accept"
+      body: "*"
+    };
+  }
+
+  // Reject a friend request
+  rpc RejectFriend(RejectFriendRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/api/v1/subscriber/reject"
+      body: "*"
+    };
+  }
+
+  // Remove a friend
+  rpc RemoveFriend(RemoveFriendRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/api/v1/subscriber"
+    };
+  }
+
+  // Get list of friends
+  rpc ListFriends(ListFriendsRequest) returns (ListFriendsResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/subscriber/{username}"
+    };
+  }
+}
+
