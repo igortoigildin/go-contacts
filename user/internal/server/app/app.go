@@ -146,14 +146,14 @@ func (a *App) initHTTPServer(ctx context.Context) error {
 }
 
 func (a *App) runHTTPServer() error {
-	log.Printf("HTTP server is running on: %s", a.serviceProvider.HTTPConfig().Address())
-
 	err := a.httpServer.ListenAndServe()
 	if err != nil {
 		return fmt.Errorf("error serving HTTP server: %w", err)
 	}
 
-	return nil
+	log.Printf("HTTP server is running on: %s", a.serviceProvider.HTTPConfig().Address())
+
+	return err
 }
 
 func (a *App) runGRPCServer() error {
