@@ -115,6 +115,13 @@ func (a *App) initGRPCServer(ctx context.Context) error {
 
 	desc.RegisterUserServiceServer(a.grpcServer, a.serviceProvider.UserImpl(ctx))
 
+	closer.Add(func() error {
+		log.Println("Shutting down gRPC server...")
+		a.grpcServer.GracefulStop()
+		log.Println("gRPC server shutdown complete")
+		return nil
+	})
+
 	return nil
 }
 
@@ -142,6 +149,15 @@ func (a *App) initHTTPServer(ctx context.Context) error {
 		Handler: corsMiddleware.Handler(mux),
 	}
 
+	closer.Add(func() error {
+		log.Println("Shutting down gRPC server...")
+		if err := a.httpServer.Shutdown(ctx); err != nil {
+			return fmt.Errorf("%w", err)
+		}
+		log.Println("gRPC server shutdown complete")
+		return nil
+	})
+
 	return nil
 }
 
@@ -163,6 +179,11 @@ func (a *App) runGRPCServer() error {
 	if err != nil {
 		return fmt.Errorf("error listening on address: %w", err)
 	}
+
+	closer.Add(func() error {
+		log.Println("Closing gGPC listener...")
+		return list.Close()
+	})
 
 	err = a.grpcServer.Serve(list)
 	if err != nil {
