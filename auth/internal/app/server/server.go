@@ -12,6 +12,7 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 
+	"github.com/igortoigildin/go-contacts/auth/pkg/closer"
 	pb "github.com/igortoigildin/go-contacts/auth/pkg/proto"
 )
 
@@ -70,6 +71,18 @@ func New(ctx context.Context, cfg Config, svcs Controllers) (*Server, error) {
 
 		srv.grpc.lis = lis
 		srv.grpc.server = grpcServer
+
+		closer.Add(func() error {
+			log.Println("Shutting down gRPC server...")
+			srv.grpc.server.GracefulStop()
+			log.Println("gRPC server shutdown complete")
+			return nil
+		})
+
+		closer.Add(func() error {
+			log.Println("Closing gGPC listener...")
+			return srv.grpc.lis.Close()
+		})
 	}
 
 	// grpc gateway
@@ -92,6 +105,15 @@ func New(ctx context.Context, cfg Config, svcs Controllers) (*Server, error) {
 
 		srv.grpcGateway.lis = lis
 		srv.grpcGateway.server = httpServer
+
+		closer.Add(func() error {
+			log.Println("Shutting down gRPC server...")
+			if err := srv.grpcGateway.server.Shutdown(ctx); err != nil {
+				return fmt.Errorf("%w", err)
+			}
+			log.Println("gRPC server shutdown complete")
+			return nil
+		})
 	}
 
 	return srv, nil
@@ -99,6 +121,11 @@ func New(ctx context.Context, cfg Config, svcs Controllers) (*Server, error) {
 
 // Run - serve grpc and grpc gateway
 func (s *Server) Run(ctx context.Context) error {
+	defer func() {
+		closer.CloseAll()
+		closer.Wait()
+	}()
+
 	group := errgroup.Group{}
 
 	group.Go(func() error {
@@ -106,12 +133,18 @@ func (s *Server) Run(ctx context.Context) error {
 		if err := s.grpc.server.Serve(s.grpc.lis); err != nil {
 			return fmt.Errorf("server: serve grpc: %w", err)
 		}
+
 		return nil
 	})
 
 	group.Go(func() error {
 		log.Println("start serve grpc gateway", s.grpcGateway.lis.Addr())
-		return fmt.Errorf("server: serve grpc gateway: %w", s.grpcGateway.server.Serve(s.grpcGateway.lis))
+
+		err := s.grpcGateway.server.Serve(s.grpcGateway.lis)
+		if err != nil {
+			return fmt.Errorf("server: serve grpc gateway: %w", s.grpcGateway.server.Serve(s.grpcGateway.lis))
+		}
+		return nil
 	})
 
 	return group.Wait()
