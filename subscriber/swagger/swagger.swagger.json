@@ -1,0 +1,226 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "API для управления заявками в друзья",
+    "version": "1.0",
+    "title": "Friend Subscriber API"
+  },
+  "host": "localhost:8080",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "subscriber",
+      "description": "Операции с друзьями"
+    }
+  ],
+  "schemes": ["http"],
+  "paths": {
+    "/api/v1/subscriber/request": {
+      "post": {
+        "tags": ["subscriber"],
+        "summary": "Отправить заявку в друзья",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/FriendRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Успех",
+            "schema": {
+              "$ref": "#/definitions/Response"
+            }
+          },
+          "400": {
+            "description": "Ошибка",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/subscriber/accept": {
+      "post": {
+        "tags": ["subscriber"],
+        "summary": "Принять заявку в друзья",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/FriendRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Успех",
+            "schema": {
+              "$ref": "#/definitions/Response"
+            }
+          },
+          "400": {
+            "description": "Ошибка",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/subscriber/reject": {
+      "post": {
+        "tags": ["subscriber"],
+        "summary": "Отклонить заявку в друзья",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/FriendRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Успех",
+            "schema": {
+              "$ref": "#/definitions/Response"
+            }
+          },
+          "400": {
+            "description": "Ошибка",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/subscriber": {
+      "delete": {
+        "tags": ["subscriber"],
+        "summary": "Удалить друга",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RemoveFriendRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Успех",
+            "schema": {
+              "$ref": "#/definitions/Response"
+            }
+          },
+          "400": {
+            "description": "Ошибка",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/subscriber/{id}": {
+      "get": {
+        "tags": ["subscriber"],
+        "summary": "Получить список друзей",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID пользователя"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Список друзей",
+            "schema": {
+              "$ref": "#/definitions/FriendsResponse"
+            }
+          },
+          "404": {
+            "description": "Не найдено",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "FriendRequest": {
+      "type": "object",
+      "properties": {
+        "user_id": {
+          "type": "string",
+          "example": "123"
+        },
+        "target_id": {
+          "type": "string",
+          "example": "456"
+        }
+      }
+    },
+    "RemoveFriendRequest": {
+      "type": "object",
+      "properties": {
+        "user_id": {
+          "type": "string",
+          "example": "123"
+        },
+        "friend_id": {
+          "type": "string",
+          "example": "456"
+        }
+      }
+    },
+    "Response": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Success"
+        }
+      }
+    },
+    "ErrorResponse": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string",
+          "example": "Invalid request"
+        }
+      }
+    },
+    "FriendsResponse": {
+      "type": "object",
+      "properties": {
+        "friends": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "example": ["456", "789"]
+        }
+      }
+    }
+  }
+}
