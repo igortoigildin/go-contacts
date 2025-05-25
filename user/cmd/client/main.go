@@ -18,7 +18,9 @@ import (
 )
 
 func main() {
-	ctx, _ := context.WithTimeout(context.Background(), time.Second*3)
+	ctx, cancel := context.WithTimeout(context.Background(), 100*time.Millisecond)
+	defer cancel()
+
 	// Define retry options
 	opts := []grpc_retry.CallOption{
 		grpc_retry.WithMax(3), // max 3 retry attempts
