@@ -10,6 +10,7 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 
+	"github.com/igortoigildin/go-contacts/subscriber/pkg/closer"
 	pb "github.com/igortoigildin/go-contacts/subscriber/pkg/proto"
 )
 
@@ -60,6 +61,19 @@ func New(ctx context.Context, cfg Config, svcs Controllers) (*Server, error) {
 
 		srv.grpc.lis = lis
 		srv.grpc.server = grpcServer
+
+
+		closer.Add(func() error {
+			log.Println("Shutting down gRPC server...")
+			srv.grpc.server.GracefulStop()
+			log.Println("gRPC server shutdown complete")
+			return nil
+		})
+
+		closer.Add(func() error {
+			log.Println("Closing gGPC listener...")
+			return srv.grpc.lis.Close()
+		})
 	}
 
 	return srv, nil
@@ -67,6 +81,11 @@ func New(ctx context.Context, cfg Config, svcs Controllers) (*Server, error) {
 
 // Run - serve grpc and grpc gateway
 func (s *Server) Run(ctx context.Context) error {
+	defer func() {
+		closer.CloseAll()
+		closer.Wait()
+	}()
+	
 	group := errgroup.Group{}
 
 	group.Go(func() error {
